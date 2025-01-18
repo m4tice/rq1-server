@@ -1,0 +1,6 @@
+shorttitle,dcterms__title,project,lifecyclestate,submitter,submitdate,accountnumbers,approval,estimatedeffort,allocation,category,DOORS,assignee
+RQONE01140358,"[ComServices] Resource (RAM, Flash) optimization of ComStack",ComServices,Canceled,Neumann Marco (DGS-EC/ESB1) (nmu2si),2017-06-02 09:23:09+00:00,CDG Common,Approved by Project CCB,75,Software Design,Requirement,None,lk22lol
+RQONE01230621,[ComStd-Com]: In(Activate) IPDU's via UDS Serivce 28 or SAE-J1939_DM13 Request,ComServices,Canceled,Hodzic Alkis (DGS-EC/ECC2) (aoh3fe),2017-09-27 15:09:45+00:00,BM-00003651_008,Approved by Project CCB,None,Software,Requirement,SW_ComServices_1,smm3si
+RQONE01230622,[ComStd-Com]: In(Activate) IPDU's via UDS Serivce 28 or SAE-J1939_DM13 Request,ComVeh,New,Hodzic Alkis (DGS-EC/ECC2) (aoh3fe),2017-09-27 15:09:45+00:00,BM-00003651_008,None,None,None,Requirement,None,smm3si
+RQONE01230623,[ComStd-Com]: In(Activate) IPDU's via UDS Serivce 28 or SAE-J1939_DM13 Request,ComVeh,Conflicted,Hodzic Alkis (DGS-EC/ECC2) (aoh3fe),2017-09-27 15:09:45+00:00,BM-00003651_008,Approved by Project CCB,None,Software,Requirement,None,smm3si
+RQONE01230624,[ComStd-Com]: In(Activate) IPDU's via UDS Serivce 28 or SAE-J1939_DM13 Request,ComCo,Evaluated,Hodzic Alkis (DGS-EC/ECC2) (aoh3fe),2017-09-27 15:09:45+00:00,BM-00003651_008,Approved by Project CCB,100,Software Design,Defect,None,smm3si
