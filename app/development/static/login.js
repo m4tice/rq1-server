@@ -15,7 +15,7 @@ function authenticate(username, password) {
     .then(response => response.json())
     .then(data => 
         {
-            if (data['result']) {
+            if (data['result'] == true) {
                 document.cookie = `username=${username}`;
                 window.location.href = '/rq1';
             } else {
@@ -41,5 +41,5 @@ function register(username, password) {
         }
     })
     .then(response => response.json())
-    .then(data => alert(JSON.stringify(data)))
+    .then(data => console.log(data))
 }

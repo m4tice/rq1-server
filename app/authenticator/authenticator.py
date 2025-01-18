@@ -7,7 +7,7 @@ class Authenticator:
         """
         constructor
         """
-        self.user_db = model_user
+        pass
 
     def authenticate(self, username, password):
         user_data = model_user.get_entry_by_header("username", username)
@@ -21,7 +21,7 @@ class Authenticator:
 
         if model_user.get_entry_by_header("username", username) is None:
             try:
-                self.user_db.insert_entry([userid, username, hashed_password])
+                model_user.insert_entry([userid, username, hashed_password])
                 return True
 
             except Exception as e:
