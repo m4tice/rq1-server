@@ -4,6 +4,9 @@ from app.model import model_user
 
 class Authenticator:
     def __init__(self):
+        """
+        constructor
+        """
         self.user_db = model_user
 
     def authenticate(self, username, password):
