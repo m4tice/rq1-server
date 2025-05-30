@@ -21,3 +21,7 @@ def register(username, password):
     data_package = [username, username, password]
     result = authenticator_instance.register(data_package)
     return jsonify({'result': result})
+
+@development_bp.route('/datatable')
+def datatable():
+    return render_template('development/datatable.html')

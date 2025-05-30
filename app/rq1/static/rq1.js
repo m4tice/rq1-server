@@ -81,6 +81,33 @@ function createTable(headers, data) {
 
     divContTable.appendChild(table);
     document.body.appendChild(divContTable);
+    // new DataTable('#table-rq1');
+    new DataTable('#table-rq1', {
+        initComplete: function () {
+            this.api()
+                .columns()
+                .every(function () {
+                    var column = this;
+                    var title = column.footer().textContent;
+     
+                    // Create input element and add event listener
+                    $('<input type="text" placeholder="Search ' + title + '" />')
+                        .appendTo($(column.footer()).empty())
+                        .on('keyup change clear', function () {
+                            if (column.search() !== this.value) {
+                                column.search(this.value).draw();
+                            }
+                        });
+                });
+        },
+        layout: {
+            top1: {
+                searchPanes: {
+                    viewTotal: true
+                }
+            }
+        }
+    });
 }
 
 function createHeaders(table, headers){
