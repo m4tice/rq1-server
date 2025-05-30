@@ -41,5 +41,11 @@ function register(username, password) {
         }
     })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+        if (data['result']) {
+            alert("Registration successful! You can now log in.");
+        } else {
+            alert("Registration failed. Please try again.");
+        }
+    })
 }
