@@ -1,35 +1,74 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/a/a6/BoschParkhaus-pjt.jpg");
+    background-size: 200%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
     margin: 0;
+    height: 100vh;
+    overflow: hidden;
 }
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(25px); /* Blur effect */
+    background-color: rgba(0, 0, 0, 0.4); /* Optional blue tint */
+    z-index: -1;
+}
+
 .login-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px;
     width: 100%;
     max-width: 400px;
+    position: relative;
+    z-index: 1;
 }
-.login-container h2 {
+
+.login-container h4 {
     margin-bottom: 20px;
     text-align: center;
+    color: #ffffff;
 }
+
 .login-container .form-control {
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: none;
+    outline: none;
+    border-radius: 0px;
+    background: transparent;
+    color: white;
+    border-bottom: 1px solid rgb(169, 169, 169);
 }
+
+.login-container .form-control::placeholder {
+    color: rgb(169, 169, 169);
+}
+
 .login-container .btn {
     padding: 10px;
-    background-color: #007bff;
     border: none;
-    border-radius: 4px;
-    color: #fff;
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
+    background-color: black;
+    opacity: 0.8;
+    color: white;
 }
+
 .login-container .btn:hover {
-    background-color: #0056b3;
+    background-color: burlywood;
+    color: black;
+}
+
+.login-container .d-flex {
+    justify-content: space-between;
+    gap: 10px;
 }

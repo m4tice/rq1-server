@@ -7,6 +7,10 @@ from app.authenticator import authenticator_instance
 def login():
     return render_template('development/login.html')
 
+@development_bp.route('/loginv2')
+def loginv2():
+    return render_template('development/loginv2.html')
+
 @development_bp.route('/login/<username>/<password>', methods=['GET'])
 def authenticate(username, password):
     result = authenticator_instance.authenticate(username, password)
