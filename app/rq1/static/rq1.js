@@ -77,6 +77,7 @@ function createTable(headers, data) {
     table.id = 'table-rq1';
 
     createHeaders(table, headers);
+    createFilterDropdowns(table, headers, data);
     createData(table, headers, data);
 
     divContTable.appendChild(table);
@@ -102,6 +103,53 @@ function createHeaders(table, headers){
 
     thead.appendChild(tr);
     table.appendChild(thead);
+}
+
+function createFilterDropdowns(table, headers, data) {
+    const thead = table.querySelector('thead');
+    const filterRow = document.createElement('tr');
+
+    headers.forEach((header, colIdx) => {
+        const th = document.createElement('th');
+        if (header === 'Billed') {
+            filterRow.appendChild(th);
+            return;
+        }
+        const select = document.createElement('select');
+        select.className = 'form-select form-select-sm';
+        select.style.fontSize = 'xx-small';
+
+        // Get unique values for this column
+        const values = new Set();
+        data.forEach(row => {
+            if (row[colIdx] !== undefined && row[colIdx] !== null) {
+                values.add(row[colIdx]);
+            }
+        });
+
+        // Add "All" option
+        const optionAll = document.createElement('option');
+        optionAll.value = '';
+        optionAll.textContent = 'All';
+        select.appendChild(optionAll);
+
+        // Add unique values as options
+        Array.from(values).sort().forEach(val => {
+            const option = document.createElement('option');
+            option.value = val;
+            option.textContent = val;
+            select.appendChild(option);
+        });
+
+        select.addEventListener('change', function() {
+            filterTableDropdown(table, headers);
+        });
+
+        th.appendChild(select);
+        filterRow.appendChild(th);
+    });
+
+    thead.appendChild(filterRow);
 }
 
 function createData(table, headers, data){
@@ -278,4 +326,26 @@ function applyResponsiveTableStyles() {
             });
         });
     }
+}
+
+function filterTableDropdown(table, headers) {
+    const thead = table.querySelector('thead');
+    const selects = thead.querySelectorAll('select');
+    const tbody = table.querySelector('tbody');
+    const rows = tbody.querySelectorAll('tr');
+
+    rows.forEach(row => {
+        let show = true;
+        selects.forEach((select, idx) => {
+            if (headers[idx] === 'Billed') return;
+            const filterValue = select.value;
+            if (filterValue) {
+                const cell = row.querySelectorAll('td')[idx];
+                if (!cell || cell.textContent !== filterValue) {
+                    show = false;
+                }
+            }
+        });
+        row.style.display = show ? '' : 'none';
+    });
 }
