@@ -1,13 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetchData();
+    applyResponsiveTableStyles();
+
+    window.addEventListener('resize', function() {
+        applyResponsiveTableStyles();
+    });
 });
 
 function fetchData() {
     fetch('/rq1/data')
         .then(response => response.json())
         .then(data => {
+            // Create buttons - corresponding to packages
             createButtons(data.packages);
+
+            // Create table with headers and data
             createTable(data.headers, data.data);
+
+            // Adding CSS styles to the table
             styleTable();
         });
 }
@@ -234,14 +244,6 @@ function styleAllocationCategoryDoors(table){
         }
     }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    applyResponsiveTableStyles();
-
-    window.addEventListener('resize', function() {
-        applyResponsiveTableStyles();
-    });
-});
 
 function applyResponsiveTableStyles() {
     const tables = document.querySelectorAll('.table');
