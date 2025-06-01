@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table with Filters</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            width: 10%; /* Set a fixed width for each column */
+        }
+        th {
+            background-color: #f4f4f4;
+            position: relative;
+        }
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            z-index: 10;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .filter-dropdown label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .filter-dropdown input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        th:hover .filter-dropdown {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    ID
+                    <div class="filter-dropdown" data-column="0">
+                        <label><input type="checkbox" value="1" checked> 1</label>
+                        <label><input type="checkbox" value="2" checked> 2</label>
+                        <label><input type="checkbox" value="3" checked> 3</label>
+                        <label><input type="checkbox" value="4" checked> 4</label>
+                        <label><input type="checkbox" value="5" checked> 5</label>
+                        <label><input type="checkbox" value="6" checked> 6</label>
+                        <label><input type="checkbox" value="7" checked> 7</label>
+                        <label><input type="checkbox" value="8" checked> 8</label>
+                        <label><input type="checkbox" value="9" checked> 9</label>
+                        <label><input type="checkbox" value="10" checked> 10</label>
+                    </div>
+                </th>
+                <th>
+                    Name
+                    <div class="filter-dropdown" data-column="1">
+                        <label><input type="checkbox" value="John Doe" checked> John Doe</label>
+                        <label><input type="checkbox" value="Jane Smith" checked> Jane Smith</label>
+                        <label><input type="checkbox" value="Emily Johnson" checked> Emily Johnson</label>
+                        <label><input type="checkbox" value="Michael Brown" checked> Michael Brown</label>
+                        <label><input type="checkbox" value="Sarah Davis" checked> Sarah Davis</label>
+                        <label><input type="checkbox" value="David Wilson" checked> David Wilson</label>
+                        <label><input type="checkbox" value="Laura Martinez" checked> Laura Martinez</label>
+                        <label><input type="checkbox" value="James Anderson" checked> James Anderson</label>
+                        <label><input type="checkbox" value="Linda Thompson" checked> Linda Thompson</label>
+                        <label><input type="checkbox" value="Robert Garcia" checked> Robert Garcia</label>
+                    </div>
+                </th>
+                <th>
+                    Position
+                    <div class="filter-dropdown" data-column="2">
+                        <label><input type="checkbox" class="select-all"> Select All</label>
+                        <label><input type="checkbox" value="Manager" checked> Manager</label>
+                        <label><input type="checkbox" value="Developer" checked> Developer</label>
+                        <label><input type="checkbox" value="Designer" checked> Designer</label>
+                        <label><input type="checkbox" value="Analyst" checked> Analyst</label>
+                        <label><input type="checkbox" value="HR" checked> HR</label>
+                        <label><input type="checkbox" value="Consultant" checked> Consultant</label>
+                        <label><input type="checkbox" value="Engineer" checked> Engineer</label>
+                        <label><input type="checkbox" value="Technician" checked> Technician</label>
+                        <label><input type="checkbox" value="Support" checked> Support</label>
+                        <label><input type="checkbox" value="Sales" checked> Sales</label>
+                    </div>
+                </th>
+                <th>
+                    Salary
+                    <div class="filter-dropdown" data-column="3">
+                        <label><input type="checkbox" class="select-all"> Select All</label>
+                        <label><input type="checkbox" value="$80,000" checked> $80,000</label>
+                        <label><input type="checkbox" value="$70,000" checked> $70,000</label>
+                        <label><input type="checkbox" value="$65,000" checked> $65,000</label>
+                        <label><input type="checkbox" value="$60,000" checked> $60,000</label>
+                        <label><input type="checkbox" value="$55,000" checked> $55,000</label>
+                        <label><input type="checkbox" value="$75,000" checked> $75,000</label>
+                        <label><input type="checkbox" value="$85,000" checked> $85,000</label>
+                        <label><input type="checkbox" value="$50,000" checked> $50,000</label>
+                        <label><input type="checkbox" value="$45,000" checked> $45,000</label>
+                    </div>
+                </th>
+                <th>
+                    Location
+                    <div class="filter-dropdown" data-column="4">
+                        <label><input type="checkbox" value="New York" checked> New York</label>
+                        <label><input type="checkbox" value="San Francisco" checked> San Francisco</label>
+                        <label><input type="checkbox" value="Los Angeles" checked> Los Angeles</label>
+                        <label><input type="checkbox" value="Chicago" checked> Chicago</label>
+                        <label><input type="checkbox" value="Boston" checked> Boston</label>
+                        <label><input type="checkbox" value="Seattle" checked> Seattle</label>
+                        <label><input type="checkbox" value="Denver" checked> Denver</label>
+                        <label><input type="checkbox" value="Houston" checked> Houston</label>
+                        <label><input type="checkbox" value="Miami" checked> Miami</label>
+                        <label><input type="checkbox" value="Atlanta" checked> Atlanta</label>
+                    </div>
+                </th>
+                <th>
+                    Department
+                    <div class="filter-dropdown" data-column="5">
+                        <label><input type="checkbox" value="Finance" checked> Finance</label>
+                        <label><input type="checkbox" value="IT" checked> IT</label>
+                        <label><input type="checkbox" value="Marketing" checked> Marketing</label>
+                        <label><input type="checkbox" value="Operations" checked> Operations</label>
+                        <label><input type="checkbox" value="Sales" checked> Sales</label>
+                    </div>
+                </th>
+                <th>
+                    Experience
+                    <div class="filter-dropdown" data-column="6">
+                        <label><input type="checkbox" value="1 year" checked> 1 year</label>
+                        <label><input type="checkbox" value="2 years" checked> 2 years</label>
+                        <label><input type="checkbox" value="3 years" checked> 3 years</label>
+                        <label><input type="checkbox" value="5 years" checked> 5 years</label>
+                        <label><input type="checkbox" value="10 years" checked> 10 years</label>
+                    </div>
+                </th>
+                <th>
+                    Education
+                    <div class="filter-dropdown" data-column="7">
+                        <label><input type="checkbox" value="Bachelor's" checked> Bachelor's</label>
+                        <label><input type="checkbox" value="Master's" checked> Master's</label>
+                        <label><input type="checkbox" value="PhD" checked> PhD</label>
+                        <label><input type="checkbox" value="Diploma" checked> Diploma</label>
+                        <label><input type="checkbox" value="High School" checked> High School</label>
+                    </div>
+                </th>
+                <th>
+                    Age
+                    <div class="filter-dropdown" data-column="8">
+                        <label><input type="checkbox" value="25" checked> 25</label>
+                        <label><input type="checkbox" value="30" checked> 30</label>
+                        <label><input type="checkbox" value="35" checked> 35</label>
+                        <label><input type="checkbox" value="40" checked> 40</label>
+                        <label><input type="checkbox" value="45" checked> 45</label>
+                    </div>
+                </th>
+                <th>
+                    Gender
+                    <div class="filter-dropdown" data-column="9">
+                        <label><input type="checkbox" value="Male" checked> Male</label>
+                        <label><input type="checkbox" value="Female" checked> Female</label>
+                        <label><input type="checkbox" value="Other" checked> Other</label>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>Manager</td>
+                <td>$80,000</td>
+                <td>New York</td>
+                <td>Finance</td>
+                <td>10 years</td>
+                <td>Master's</td>
+                <td>40</td>
+                <td>Male</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jane Smith</td>
+                <td>Developer</td>
+                <td>$70,000</td>
+                <td>San Francisco</td>
+                <td>IT</td>
+                <td>5 years</td>
+                <td>Bachelor's</td>
+                <td>30</td>
+                <td>Female</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Emily Johnson</td>
+                <td>Designer</td>
+                <td>$65,000</td>
+                <td>Los Angeles</td>
+                <td>Marketing</td>
+                <td>3 years</td>
+                <td>Diploma</td>
+                <td>25</td>
+                <td>Female</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Michael Brown</td>
+                <td>Analyst</td>
+                <td>$60,000</td>
+                <td>Chicago</td>
+                <td>Operations</td>
+                <td>2 years</td>
+                <td>Bachelor's</td>
+                <td>35</td>
+                <td>Male</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Sarah Davis</td>
+                <td>HR</td>
+                <td>$55,000</td>
+                <td>Boston</td>
+                <td>Sales</td>
+                <td>1 year</td>
+                <td>High School</td>
+                <td>45</td>
+                <td>Female</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>David Wilson</td>
+                <td>Consultant</td>
+                <td>$75,000</td>
+                <td>Seattle</td>
+                <td>Finance</td>
+                <td>8 years</td>
+                <td>Master's</td>
+                <td>38</td>
+                <td>Male</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Laura Martinez</td>
+                <td>Engineer</td>
+                <td>$85,000</td>
+                <td>Denver</td>
+                <td>IT</td>
+                <td>6 years</td>
+                <td>Bachelor's</td>
+                <td>32</td>
+                <td>Female</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>James Anderson</td>
+                <td>Technician</td>
+                <td>$50,000</td>
+                <td>Houston</td>
+                <td>Operations</td>
+                <td>4 years</td>
+                <td>Diploma</td>
+                <td>28</td>
+                <td>Male</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Linda Thompson</td>
+                <td>Support</td>
+                <td>$45,000</td>
+                <td>Miami</td>
+                <td>Marketing</td>
+                <td>2 years</td>
+                <td>High School</td>
+                <td>24</td>
+                <td>Female</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Robert Garcia</td>
+                <td>Sales</td>
+                <td>$55,000</td>
+                <td>Atlanta</td>
+                <td>Sales</td>
+                <td>5 years</td>
+                <td>Bachelor's</td>
+                <td>29</td>
+                <td>Male</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        // Handle "Select All" functionality for the Position column
+        document.querySelectorAll('.filter-dropdown .select-all').forEach(selectAllCheckbox => {
+            selectAllCheckbox.addEventListener('change', () => {
+                const dropdown = selectAllCheckbox.closest('.filter-dropdown');
+                const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]:not(.select-all)');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+                filterTable(dropdown);
+            });
+        });
+    
+        // Handle individual checkbox changes
+        document.querySelectorAll('.filter-dropdown input[type="checkbox"]:not(.select-all)').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const dropdown = checkbox.closest('.filter-dropdown');
+                filterTable(dropdown);
+            });
+        });
+    
+        // Filter table rows based on selected checkboxes
+        function filterTable(dropdown) {
+            const columnIndex = dropdown.dataset.column;
+            const selectedValues = Array.from(dropdown.querySelectorAll('input[type="checkbox"]:checked:not(.select-all)')).map(input => input.value);
+    
+            document.querySelectorAll('tbody tr').forEach(row => {
+                const cell = row.cells[columnIndex];
+                if (cell && selectedValues.includes(cell.textContent)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
