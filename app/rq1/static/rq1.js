@@ -1,18 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     fetchData();
+    applyResponsiveTableStyles();
+
+    window.addEventListener('resize', function () {
+        applyResponsiveTableStyles();
+    });
 });
 
 function fetchData() {
     fetch('/rq1/data')
         .then(response => response.json())
         .then(data => {
+            // Create buttons - corresponding to packages
             createButtons(data.packages);
+
+            // Create table with headers and data
             createTable(data.headers, data.data);
+
+            // Adding CSS styles to the table
             styleTable();
         });
 }
 
-function createButtons(button_names){
+function createButtons(button_names) {
     if (document.querySelector('.container-buttons')) {
         document.querySelector('.container-buttons').remove();
     }
@@ -30,7 +40,7 @@ function createButtons(button_names){
     document.body.appendChild(divCont);
 }
 
-function createButton(button_name){
+function createButton(button_name) {
     const divButton = document.createElement('div');
     divButton.className = 'col-md-3';
     divButton.style.display = 'flex';
@@ -44,19 +54,19 @@ function createButton(button_name){
     button.style.width = '100%';
     button.style.fontSize = 'small';
 
-    button.onclick = function(){
+    button.onclick = function () {
         fetch(`/rq1/data/${button_name}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            createButtons(data.packages);
-            createTable(data.headers, data.data);
-            styleTable();
-        });
+            .then(response => response.json())
+            .then(data => {
+                createButtons(data.packages);
+                createTable(data.headers, data.data);
+                styleTable();
+            });
     }
 
     divButton.appendChild(button);
@@ -76,27 +86,32 @@ function createTable(headers, data) {
     table.className = 'table table-hover';
     table.id = 'table-rq1';
 
-    createHeaders(table, headers);
+    createHeaders(table, headers, data);
+    // createFilterDropdowns(table, headers, data);
     createData(table, headers, data);
 
     divContTable.appendChild(table);
     document.body.appendChild(divContTable);
 }
 
-function createHeaders(table, headers){
+function createHeaders(table, headers, data) {
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
-    
+
     // Append additonal header for Billed button
     headers.push('Billed');
 
     // Append headers to row
-    headers.forEach(header => {
+    headers.forEach((header, idx) => {
         const th = document.createElement('th');
+        // Pass column index to dropdown
+        const divFilter = createColumnFiltersDropdown(data.map(row => row[idx]), idx); 
         th.className = 'table-dark';
         th.textContent = header;
         th.style.textAlign = 'left';
         th.style.fontSize = 'xx-small';
+        console.log(`Header: ${header}, Index: ${idx}`);
+        th.appendChild(divFilter); // Append filter dropdown to header        
         tr.appendChild(th);
     });
 
@@ -104,11 +119,58 @@ function createHeaders(table, headers){
     table.appendChild(thead);
 }
 
-function createData(table, headers, data){
+function createFilterDropdowns(table, headers, data) {
+    const thead = table.querySelector('thead');
+    const filterRow = document.createElement('tr');
+
+    headers.forEach((header, colIdx) => {
+        const th = document.createElement('th');
+        if (header === 'Billed') {
+            filterRow.appendChild(th);
+            return;
+        }
+        const select = document.createElement('select');
+        select.className = 'form-select form-select-sm';
+        select.style.fontSize = 'xx-small';
+
+        // Get unique values for this column
+        const values = new Set();
+        data.forEach(row => {
+            if (row[colIdx] !== undefined && row[colIdx] !== null) {
+                values.add(row[colIdx]);
+            }
+        });
+
+        // Add "All" option
+        const optionAll = document.createElement('option');
+        optionAll.value = '';
+        optionAll.textContent = 'All';
+        select.appendChild(optionAll);
+
+        // Add unique values as options
+        Array.from(values).sort().forEach(val => {
+            const option = document.createElement('option');
+            option.value = val;
+            option.textContent = val;
+            select.appendChild(option);
+        });
+
+        select.addEventListener('change', function () {
+            filterTableDropdown(table, headers);
+        });
+
+        th.appendChild(select);
+        filterRow.appendChild(th);
+    });
+
+    thead.appendChild(filterRow);
+}
+
+function createData(table, headers, data) {
     const tbody = document.createElement('tbody');
     data.forEach(rowData => {
         const tr = document.createElement('tr');
-        
+
         // Append data to row
         for (const idx of rowData.keys()) {
             const td = document.createElement('td');
@@ -118,7 +180,7 @@ function createData(table, headers, data){
             td.style.fontSize = 'xx-small';
             tr.appendChild(td);
         }
-        
+
         const tdButton = document.createElement('td');
 
         // Billed button
@@ -127,7 +189,7 @@ function createData(table, headers, data){
         buttonBilled.textContent = 'Billed';
         buttonBilled.style.width = '100%';
         buttonBilled.style.fontSize = 'xx-small';
-        buttonBilled.onclick = function(){
+        buttonBilled.onclick = function () {
             alert(tr.getElementsByClassName(headers[0].toLowerCase())[0].innerText);
         }
 
@@ -139,7 +201,7 @@ function createData(table, headers, data){
     table.appendChild(tbody);
 }
 
-function styleTable(){
+function styleTable() {
     const table = document.getElementById("table-rq1");
     const rows = table.getElementsByTagName("tr");
 
@@ -147,7 +209,7 @@ function styleTable(){
     styleAllocationCategoryDoors(table);
 }
 
-function styleLifeCycleState(table){
+function styleLifeCycleState(table) {
     const items = table.getElementsByClassName("lifecyclestate");
 
     for (item of items) {
@@ -165,9 +227,9 @@ function styleLifeCycleState(table){
     }
 }
 
-function styleAllocationCategoryDoors(table){
+function styleAllocationCategoryDoors(table) {
     const rows = table.getElementsByTagName("tr");
-    
+
     for (let i = 1; i < rows.length; i++) {
         const allocation = rows[i].getElementsByClassName("allocation")[0];
         const category = rows[i].getElementsByClassName("category")[0];
@@ -186,14 +248,6 @@ function styleAllocationCategoryDoors(table){
         }
     }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    applyResponsiveTableStyles();
-
-    window.addEventListener('resize', function() {
-        applyResponsiveTableStyles();
-    });
-});
 
 function applyResponsiveTableStyles() {
     const tables = document.querySelectorAll('.table');
@@ -278,4 +332,88 @@ function applyResponsiveTableStyles() {
             });
         });
     }
+}
+
+function filterTableDropdown(table, headers) {
+    const thead = table.querySelector('thead');
+    const selects = thead.querySelectorAll('select');
+    const tbody = table.querySelector('tbody');
+    const rows = tbody.querySelectorAll('tr');
+
+    rows.forEach(row => {
+        let show = true;
+        selects.forEach((select, idx) => {
+            if (headers[idx] === 'Billed') return;
+            const filterValue = select.value;
+            if (filterValue) {
+                const cell = row.querySelectorAll('td')[idx];
+                if (!cell || cell.textContent !== filterValue) {
+                    show = false;
+                }
+            }
+        });
+        row.style.display = show ? '' : 'none';
+    });
+}
+
+function createColumnFiltersDropdown(data, colIdx) {
+    const dropdownDiv = document.createElement('div');
+    dropdownDiv.className = 'filter-dropdown';
+    dropdownDiv.setAttribute('data-column', colIdx);
+
+    // Get unique values and filter out undefined/null/empty
+    const unique = Array.from(new Set(data.filter(x => x !== undefined && x !== null && x !== '')));
+
+    // "Select All" option
+    const selectAllLabel = document.createElement('label');
+    const selectAllInputCheckbox = document.createElement('input');
+    selectAllInputCheckbox.type = 'checkbox';
+    selectAllInputCheckbox.className = 'select-all';
+    selectAllInputCheckbox.checked = true;
+    selectAllLabel.appendChild(selectAllInputCheckbox);
+    selectAllLabel.appendChild(document.createTextNode('Select All'));
+    dropdownDiv.appendChild(selectAllLabel);
+
+    // Other options
+    unique.forEach(item => {
+        const label = document.createElement('label');
+        const inputCheckbox = document.createElement('input');
+        inputCheckbox.type = 'checkbox';
+        inputCheckbox.checked = true;
+        inputCheckbox.value = item;
+        label.appendChild(inputCheckbox);
+        label.appendChild(document.createTextNode(item));
+        dropdownDiv.appendChild(label);
+    });
+
+    // Attach event listeners for select-all and individual checkboxes
+    selectAllInputCheckbox.addEventListener('change', () => {
+        const checkboxes = dropdownDiv.querySelectorAll('input[type="checkbox"]:not(.select-all)');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAllInputCheckbox.checked;
+        });
+        filterTable(dropdownDiv);
+    });
+    dropdownDiv.querySelectorAll('input[type="checkbox"]:not(.select-all)').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            filterTable(dropdownDiv);
+        });
+    });
+
+    return dropdownDiv;
+}
+
+// Filter table rows based on selected checkboxes
+function filterTable(dropdown) {
+    const columnIndex = parseInt(dropdown.dataset.column, 10);
+    const selectedValues = Array.from(dropdown.querySelectorAll('input[type="checkbox"]:checked:not(.select-all)')).map(input => input.value);
+
+    document.querySelectorAll('tbody tr').forEach(row => {
+        const cell = row.cells[columnIndex];
+        if (cell && selectedValues.includes(cell.textContent)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
 }
