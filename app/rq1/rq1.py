@@ -7,8 +7,21 @@ author: @guu8hc
 from flask import render_template, jsonify
 
 from app.model import model_rq1, packages
+from app.settings import DEBUG, BACKGROUND_URL, BILLED
 
 from . import rq1_bp
+
+
+def get_settings():
+    """
+    get settings for rq1
+    :return: settings
+    """
+    return {
+        'DEBUG': DEBUG,
+        'BACKGROUND_URL': BACKGROUND_URL,
+        'BILLED': BILLED
+    }
 
 
 @rq1_bp.route('/')
@@ -16,14 +29,15 @@ def rq12_endpoint():
     """
     endpoint for rq1
     """
-    return render_template('rq1/rq1.html')
+    return render_template('rq1/rq1.html', SETTINGS=get_settings())
 
 @rq1_bp.route('/data')
 def rq12_data_endpoint():
     """
     endpoint to get data for rq1
     """
-    return jsonify({'packages': packages, 'headers': model_rq1.get_headers(), 'data': model_rq1.get_all_items()})
+    settings = get_settings()
+    return jsonify({'packages': packages, 'headers': model_rq1.get_headers(), 'data': model_rq1.get_all_items(), 'settings': settings})
 
 @rq1_bp.route('/data/<package>', methods=['GET'])
 def rq12_data_package_endpoint(package):

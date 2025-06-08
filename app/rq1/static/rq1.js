@@ -1,3 +1,7 @@
+// Global variable for user settings
+let DEBUG = false;
+let BILLED = false;
+
 document.addEventListener('DOMContentLoaded', function () {
     fetchData();
     applyResponsiveTableStyles();
@@ -11,6 +15,17 @@ function fetchData() {
     fetch('/rq1/data')
         .then(response => response.json())
         .then(data => {
+
+            // User settings
+            const SETTINGS = data.settings;
+
+            // Default to false if not set
+            DEBUG = SETTINGS.DEBUG || false;
+            BILLED = SETTINGS.BILLED || false;
+
+            // Create foundation for the page
+            createFoundation(SETTINGS);
+
             // Create buttons - corresponding to packages
             createButtons(data.packages);
 
@@ -21,6 +36,21 @@ function fetchData() {
             styleTable();
         });
 }
+
+function createFoundation(settings) {
+    const BACKGROUND_URL = settings.BACKGROUND_URL;
+
+    if (DEBUG) {
+        console.log("[DEBUG] Background URL: " + BACKGROUND_URL);
+    }
+
+    // Setting background as per user settings
+    if ((BACKGROUND_URL !== "None") || (BACKGROUND_URL !== "") || (BACKGROUND_URL !== undefined)) {
+        document.body.style.background = `url('${BACKGROUND_URL}') no-repeat center center fixed`;
+        document.body.style.backgroundSize = 'cover';
+    }
+}
+
 
 function createButtons(button_names) {
     if (document.querySelector('.container-buttons')) {
@@ -90,7 +120,6 @@ function createTable(headers, data) {
     table.id = 'table-rq1';
 
     createHeaders(table, headers, data);
-    // createFilterDropdowns(table, headers, data);
     createData(table, headers, data);
 
     divContTable.appendChild(table);
@@ -102,13 +131,15 @@ function createHeaders(table, headers, data) {
     const tr = document.createElement('tr');
 
     // Append additonal header for Billed button
-    headers.push('Billed');
+    if (BILLED) {
+        headers.push('Billed');
+    }
 
     // Append headers to row
     headers.forEach((header, idx) => {
         const th = document.createElement('th');
         // Pass column index to dropdown
-        const divFilter = createColumnFiltersDropdown(data.map(row => row[idx]), idx); 
+        const divFilter = createColumnFiltersDropdown(data.map(row => row[idx]), idx);
         th.className = 'table-dark';
         th.textContent = header;
         th.style.textAlign = 'left';
@@ -171,6 +202,7 @@ function createFilterDropdowns(table, headers, data) {
 
 function createData(table, headers, data) {
     const tbody = document.createElement('tbody');
+
     data.forEach(rowData => {
         const tr = document.createElement('tr');
 
@@ -184,20 +216,23 @@ function createData(table, headers, data) {
             tr.appendChild(td);
         }
 
-        const tdButton = document.createElement('td');
+        if (BILLED) {
+            const tdButton = document.createElement('td');
 
-        // Billed button
-        const buttonBilled = document.createElement('button');
-        buttonBilled.className = 'btn btn-primary btn-billed';
-        buttonBilled.textContent = 'Billed';
-        buttonBilled.style.width = '100%';
-        buttonBilled.style.fontSize = 'xx-small';
-        buttonBilled.onclick = function () {
-            alert(tr.getElementsByClassName(headers[0].toLowerCase())[0].innerText);
+            // Billed button
+            const buttonBilled = document.createElement('button');
+            buttonBilled.className = 'btn btn-primary btn-billed';
+            buttonBilled.textContent = 'Billed';
+            buttonBilled.style.width = '100%';
+            buttonBilled.style.fontSize = 'xx-small';
+            buttonBilled.onclick = function () {
+                alert(tr.getElementsByClassName(headers[0].toLowerCase())[0].innerText);
+            }
+
+            tdButton.appendChild(buttonBilled);
+            tr.appendChild(tdButton);
         }
 
-        tdButton.appendChild(buttonBilled);
-        tr.appendChild(tdButton);
         tbody.appendChild(tr);
     });
 
