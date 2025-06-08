@@ -81,6 +81,9 @@ function createTable(headers, data) {
 
     const divContTable = document.createElement('div');
     divContTable.className = 'container container-table';
+    divContTable.style.margin = '0 auto'; // Center the table horizontally
+    divContTable.style.padding = '0 10px'; // Add padding for left and right margins
+    divContTable.style.maxWidth = 'calc(100% - 20px)'; // Ensure the table fits within the device width
 
     const table = document.createElement('table');
     table.className = 'table table-hover';
