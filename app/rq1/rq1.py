@@ -29,7 +29,7 @@ def rq12_endpoint():
     """
     endpoint for rq1
     """
-    return render_template('rq1/rq1.html', SETTINGS=get_settings())
+    return render_template('rq1/rq1.html')
 
 @rq1_bp.route('/data')
 def rq12_data_endpoint():
