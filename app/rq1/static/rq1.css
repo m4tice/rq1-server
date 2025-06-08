@@ -1,0 +1,47 @@
+.filter-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    padding: 8px 12px;
+    max-height: 220px;
+    overflow-y: auto;
+    color: #222;
+    min-width: 140px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.filter-dropdown label {
+    display: block;
+    margin-bottom: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.filter-dropdown input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+th {
+    position: relative;
+}
+
+th:hover .filter-dropdown,
+th:focus-within .filter-dropdown {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .filter-dropdown {
+        left: auto;
+        right: 0;
+        min-width: 100px;
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+}

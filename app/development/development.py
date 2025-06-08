@@ -11,6 +11,10 @@ def login():
 def loginv2():
     return render_template('development/loginv2.html')
 
+@development_bp.route('/table')
+def table():
+    return render_template('development/table.html')
+
 @development_bp.route('/login/<username>/<password>', methods=['GET'])
 def authenticate(username, password):
     result = authenticator_instance.authenticate(username, password)
