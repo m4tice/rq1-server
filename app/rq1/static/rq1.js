@@ -38,14 +38,14 @@ function fetchData() {
 }
 
 function createFoundation(settings) {
-    const BACKGROUND_URL = settings.BACKGROUND_URL;
+    const BACKGROUND_URL = settings.BACKGROUND_URL || null;
 
     if (DEBUG) {
         console.log("[DEBUG] Background URL: " + BACKGROUND_URL);
     }
 
     // Setting background as per user settings
-    if ((BACKGROUND_URL !== "None") || (BACKGROUND_URL !== "") || (BACKGROUND_URL !== undefined)) {
+    if (BACKGROUND_URL && BACKGROUND_URL !== "None") {
         document.body.style.background = `url('${BACKGROUND_URL}') no-repeat center center fixed`;
         document.body.style.backgroundSize = 'cover';
     }
