@@ -7,22 +7,9 @@ author: @guu8hc
 from flask import render_template, jsonify
 
 from app.model import model_rq1, packages
-from app.settings import DEBUG, BACKGROUND_URL, BILLED
+from app.settings import get_settings
 
 from . import rq1_bp
-
-
-def get_settings():
-    """
-    get settings for rq1
-    :return: settings
-    """
-    return {
-        'DEBUG': DEBUG,
-        'BACKGROUND_URL': BACKGROUND_URL,
-        'BILLED': BILLED
-    }
-
 
 @rq1_bp.route('/')
 def rq12_endpoint():
