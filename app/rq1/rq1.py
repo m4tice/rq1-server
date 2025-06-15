@@ -34,3 +34,10 @@ def rq12_data_package_endpoint(package):
     if package == 'Alle':
         return jsonify({'packages': packages, 'headers': model_rq1.get_headers(), 'data': model_rq1.get_all_items()})
     return jsonify({'packages': packages, 'headers': model_rq1.get_headers(), 'data': model_rq1.get_entry_by_project(package)})
+
+@rq1_bp.route('/v2')
+def rq1v2_endpoint():
+    """
+    endpoint for rq1
+    """
+    return render_template('rq1/v2.html')
