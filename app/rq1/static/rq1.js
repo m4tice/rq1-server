@@ -6,6 +6,22 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchData();
     applyResponsiveTableStyles();
 
+    // Settings button handler
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsMenu = document.getElementById('settings-menu');
+    if (settingsBtn && settingsMenu) {
+        settingsBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            settingsMenu.style.display = settingsMenu.style.display === 'none' ? 'block' : 'none';
+        });
+        // Hide menu when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) {
+                settingsMenu.style.display = 'none';
+            }
+        });
+    }
+
     window.addEventListener('resize', function () {
         applyResponsiveTableStyles();
     });
