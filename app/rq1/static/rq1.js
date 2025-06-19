@@ -22,6 +22,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const billedToggle = document.getElementById('billedToggle');
+    if (billedToggle) {
+        billedToggle.addEventListener('click', function () {
+            if (billedToggle.checked) {
+                BILLED = true;
+                fetchData();
+            } else {
+                BILLED = false;
+                fetchData();
+            }
+        });
+    }
+
     window.addEventListener('resize', function () {
         applyResponsiveTableStyles();
     });
@@ -37,7 +50,7 @@ function fetchData() {
 
             // Default to false if not set
             DEBUG = SETTINGS.DEBUG || false;
-            BILLED = SETTINGS.BILLED || false;
+            // BILLED = SETTINGS.BILLED || false;
 
             // Create foundation for the page
             createFoundation(SETTINGS);

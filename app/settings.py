@@ -11,7 +11,7 @@ BACKGROUND_URL = 'https://media.idownloadblog.com/wp-content/uploads/2021/06/mac
 # BACKGROUND_URL = None
 
 # Features
-BILLED = True
+# BILLED = True  # Deprecated. Supported directly via interractive settings.
 
 
 def get_settings():
@@ -22,5 +22,5 @@ def get_settings():
     return {
         'DEBUG': DEBUG,
         'BACKGROUND_URL': BACKGROUND_URL,
-        'BILLED': BILLED
+        # 'BILLED': BILLED  # Deprecated. Supported directly via interractive settings.
     }
