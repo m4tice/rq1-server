@@ -1,6 +1,73 @@
+// Global variable for user settings
+let DEBUG = false;
+let BILLED = false;
+let BUTTONS = false;
+let DARK_MODE = false;
+
 document.addEventListener('DOMContentLoaded', function () {
     fetchData();
     applyResponsiveTableStyles();
+
+    // Settings button handler
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsMenu = document.getElementById('settings-menu');
+    if (settingsBtn && settingsMenu) {
+        settingsBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            settingsMenu.style.display = settingsMenu.style.display === 'none' ? 'block' : 'none';
+        });
+        // Hide menu when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) {
+                settingsMenu.style.display = 'none';
+            }
+        });
+    }
+
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        // Set initial state from localStorage
+        if (localStorage.getItem('DARK_MODE') === 'true') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+        darkModeToggle.addEventListener('change', function () {
+            if (darkModeToggle.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('DARK_MODE', 'true');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('DARK_MODE', 'false');
+            }
+        });
+    }
+
+    const billedToggle = document.getElementById('billedToggle');
+    if (billedToggle) {
+        billedToggle.addEventListener('click', function () {
+            if (billedToggle.checked) {
+                BILLED = true;
+                fetchData();
+            } else {
+                BILLED = false;
+                fetchData();
+            }
+        });
+    }
+
+    const buttonsToggle = document.getElementById('buttonsToggle');
+    if (buttonsToggle) {
+        buttonsToggle.addEventListener('click', function () {
+            if (buttonsToggle.checked) {
+                BUTTONS = true;
+                fetchData();
+            } else {
+                BUTTONS = false;
+                fetchData();
+            }
+        });
+    }
 
     window.addEventListener('resize', function () {
         applyResponsiveTableStyles();
@@ -11,8 +78,27 @@ function fetchData() {
     fetch('/rq1/data')
         .then(response => response.json())
         .then(data => {
+
+            // User settings
+            const SETTINGS = data.settings;
+
+            // Default to false if not set
+            DEBUG = SETTINGS.DEBUG || false;
+            // BILLED = SETTINGS.BILLED || false;
+
+            // Create foundation for the page
+            createFoundation(SETTINGS);
+
             // Create buttons - corresponding to packages
-            createButtons(data.packages);
+            if (BUTTONS) {
+                createButtons(data.packages);
+            } else {
+                // If buttons are not enabled, remove the container
+                const existingButtonsContainer = document.querySelector('.container-buttons');
+                if (existingButtonsContainer) {
+                    existingButtonsContainer.remove();
+                }
+            }
 
             // Create table with headers and data
             createTable(data.headers, data.data);
@@ -21,6 +107,21 @@ function fetchData() {
             styleTable();
         });
 }
+
+function createFoundation(settings) {
+    const BACKGROUND_URL = settings.BACKGROUND_URL || null;
+
+    if (DEBUG) {
+        console.log("[DEBUG] Background URL: " + BACKGROUND_URL);
+    }
+
+    // Setting background as per user settings
+    if (BACKGROUND_URL && BACKGROUND_URL !== "None") {
+        document.body.style.background = `url('${BACKGROUND_URL}') no-repeat center center fixed`;
+        document.body.style.backgroundSize = 'cover';
+    }
+}
+
 
 function createButtons(button_names) {
     if (document.querySelector('.container-buttons')) {
@@ -90,7 +191,6 @@ function createTable(headers, data) {
     table.id = 'table-rq1';
 
     createHeaders(table, headers, data);
-    // createFilterDropdowns(table, headers, data);
     createData(table, headers, data);
 
     divContTable.appendChild(table);
@@ -102,14 +202,16 @@ function createHeaders(table, headers, data) {
     const tr = document.createElement('tr');
 
     // Append additonal header for Billed button
-    headers.push('Billed');
+    if (BILLED) {
+        headers.push('Billed');
+    }
 
     // Append headers to row
     headers.forEach((header, idx) => {
         const th = document.createElement('th');
         // Pass column index to dropdown
-        const divFilter = createColumnFiltersDropdown(data.map(row => row[idx]), idx); 
-        th.className = 'table-dark';
+        const divFilter = createColumnFiltersDropdown(data.map(row => row[idx]), idx);
+        th.className = 'table-light';
         th.textContent = header;
         th.style.textAlign = 'left';
         th.style.fontSize = 'xx-small';
@@ -171,6 +273,7 @@ function createFilterDropdowns(table, headers, data) {
 
 function createData(table, headers, data) {
     const tbody = document.createElement('tbody');
+
     data.forEach(rowData => {
         const tr = document.createElement('tr');
 
@@ -184,20 +287,23 @@ function createData(table, headers, data) {
             tr.appendChild(td);
         }
 
-        const tdButton = document.createElement('td');
+        if (BILLED) {
+            const tdButton = document.createElement('td');
 
-        // Billed button
-        const buttonBilled = document.createElement('button');
-        buttonBilled.className = 'btn btn-primary btn-billed';
-        buttonBilled.textContent = 'Billed';
-        buttonBilled.style.width = '100%';
-        buttonBilled.style.fontSize = 'xx-small';
-        buttonBilled.onclick = function () {
-            alert(tr.getElementsByClassName(headers[0].toLowerCase())[0].innerText);
+            // Billed button
+            const buttonBilled = document.createElement('button');
+            buttonBilled.className = 'btn btn-primary btn-billed';
+            buttonBilled.textContent = 'Billed';
+            buttonBilled.style.width = '100%';
+            buttonBilled.style.fontSize = 'xx-small';
+            buttonBilled.onclick = function () {
+                alert(tr.getElementsByClassName(headers[0].toLowerCase())[0].innerText);
+            }
+
+            tdButton.appendChild(buttonBilled);
+            tr.appendChild(tdButton);
         }
 
-        tdButton.appendChild(buttonBilled);
-        tr.appendChild(tdButton);
         tbody.appendChild(tr);
     });
 

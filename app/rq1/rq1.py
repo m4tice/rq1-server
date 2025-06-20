@@ -7,9 +7,9 @@ author: @guu8hc
 from flask import render_template, jsonify
 
 from app.model import model_rq1, packages
+from app.settings import get_settings
 
 from . import rq1_bp
-
 
 @rq1_bp.route('/')
 def rq12_endpoint():
@@ -23,7 +23,8 @@ def rq12_data_endpoint():
     """
     endpoint to get data for rq1
     """
-    return jsonify({'packages': packages, 'headers': model_rq1.get_headers(), 'data': model_rq1.get_all_items()})
+    settings = get_settings()
+    return jsonify({'packages': packages, 'headers': model_rq1.get_headers(), 'data': model_rq1.get_all_items(), 'settings': settings})
 
 @rq1_bp.route('/data/<package>', methods=['GET'])
 def rq12_data_package_endpoint(package):
