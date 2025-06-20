@@ -1,0 +1,97 @@
+body, button, input, select, textarea, table, th, td {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif !important;
+}
+
+.parent {
+	display: grid;
+	grid-template-columns: 0.5fr repeat(13, 1fr) 10fr repeat(4, 1fr) 0.5fr;
+	grid-template-rows: 1fr;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	padding: 10px 0 10px 0;
+}
+
+.div1 {
+	grid-area: 1 / 16 / 2 / 20;
+	display: flex;
+	justify-content: right;
+	min-width: 159px;
+	width: 100%;
+	gap: 5px;
+}
+
+.div2 {
+	grid-area: 1 / 2 / 2 / 15;
+	display: flex;
+	justify-content: left;
+	min-width: 1420px;
+	width: 100%;
+	gap: 10px;
+}
+
+.btn {
+	/* Text */
+	font-size: 75%;
+	font-weight: normal;
+	text-align: center;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	color: black;
+
+	/* Shape and color */
+	background-color: #f6f8fa;
+	border: 1px solid #d1d9e0;
+	border-radius: 0;
+
+	max-height: 35px;
+	min-height: 35px;
+}
+
+.btn-package {
+    min-width: 100px;
+    max-width: 100%;
+}
+
+.btn-setting {
+	min-width: 36px;
+    max-width: 100%;
+}
+
+
+.btn-first {
+	border-radius: 10px 0 0 10px  !important;
+}
+
+.btn-last {
+	border-radius: 0 10px 10px 0  !important;
+}
+
+.btn-single {
+	border-radius: 10px  !important;
+}
+
+.empty {
+	background-color: transparent !important;
+	border: none !important;
+	color: transparent !important;
+	min-width: 36px !important;
+}
+
+/* TABLE */
+
+.table-container {
+	padding: 0 18px;
+	font-size: smaller;
+}
+
+table td:first-child,
+table th:first-child {
+    border-right: none !important;
+}
+
+table td + td,
+table th + th {
+    border-left: none !important;
+}
