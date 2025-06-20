@@ -11,7 +11,7 @@ DEBUG = True
 BACKGROUND_URL = None
 
 # Features
-# BILLED = True  # Deprecated. Supported directly via interractive settings.
+# BILLED = True  # Deprecated. Supported directly via interactive settings.
 
 
 def get_settings():
