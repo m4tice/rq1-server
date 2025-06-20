@@ -1,6 +1,7 @@
 // Global variable for user settings
 let DEBUG = false;
 let BILLED = false;
+let BUTTONS = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchData();
@@ -35,6 +36,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const buttonsToggle = document.getElementById('buttonsToggle');
+    if (buttonsToggle) {
+        buttonsToggle.addEventListener('click', function () {
+            if (buttonsToggle.checked) {
+                BUTTONS = true;
+                fetchData();
+            } else {
+                BUTTONS = false;
+                fetchData();
+            }
+        });
+    }
+
     window.addEventListener('resize', function () {
         applyResponsiveTableStyles();
     });
@@ -56,7 +70,15 @@ function fetchData() {
             createFoundation(SETTINGS);
 
             // Create buttons - corresponding to packages
-            createButtons(data.packages);
+            if (BUTTONS) {
+                createButtons(data.packages);
+            } else {
+                // If buttons are not enabled, remove the container
+                const existingButtonsContainer = document.querySelector('.container-buttons');
+                if (existingButtonsContainer) {
+                    existingButtonsContainer.remove();
+                }
+            }
 
             // Create table with headers and data
             createTable(data.headers, data.data);
@@ -169,7 +191,7 @@ function createHeaders(table, headers, data) {
         const th = document.createElement('th');
         // Pass column index to dropdown
         const divFilter = createColumnFiltersDropdown(data.map(row => row[idx]), idx);
-        th.className = 'table-dark';
+        th.className = 'table-light';
         th.textContent = header;
         th.style.textAlign = 'left';
         th.style.fontSize = 'xx-small';
