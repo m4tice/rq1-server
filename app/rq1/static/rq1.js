@@ -2,6 +2,7 @@
 let DEBUG = false;
 let BILLED = false;
 let BUTTONS = false;
+let DARK_MODE = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchData();
@@ -19,6 +20,25 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('click', function (e) {
             if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) {
                 settingsMenu.style.display = 'none';
+            }
+        });
+    }
+
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        // Set initial state from localStorage
+        if (localStorage.getItem('DARK_MODE') === 'true') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+        darkModeToggle.addEventListener('change', function () {
+            if (darkModeToggle.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('DARK_MODE', 'true');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('DARK_MODE', 'false');
             }
         });
     }
