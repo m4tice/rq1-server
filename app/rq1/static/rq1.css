@@ -65,9 +65,9 @@ th:focus-within .filter-dropdown {
     align-items: center;
 }
 
-.bi-gear-fill {
+.bi-three-dots-vertical {
     font-size: 20px;
-    color: white;
+    color: gray;
 }   
 
 #settings-menu {
@@ -86,6 +86,10 @@ th:focus-within .filter-dropdown {
 
 .form-check {
     padding-left: 0px;
+}
+
+.form-check-label {
+    font-size: 0.7rem;
 }
 
 body, button, input, select, textarea, table, th, td {
