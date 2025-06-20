@@ -12,14 +12,14 @@ from app.settings import get_settings
 from . import rq1_bp
 
 @rq1_bp.route('/')
-def rq12_endpoint():
+def rq1_endpoint():
     """
     endpoint for rq1
     """
     return render_template('rq1/rq1.html')
 
 @rq1_bp.route('/data')
-def rq12_data_endpoint():
+def rq1_data_endpoint():
     """
     endpoint to get data for rq1
     """
@@ -27,7 +27,7 @@ def rq12_data_endpoint():
     return jsonify({'packages': packages, 'headers': model_rq1.get_headers(), 'data': model_rq1.get_all_items(), 'settings': settings})
 
 @rq1_bp.route('/data/<package>', methods=['GET'])
-def rq12_data_package_endpoint(package):
+def rq1_data_package_endpoint(package):
     """
     endpoint to get data for a specific package
     :param package: name of the package
