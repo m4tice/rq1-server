@@ -4,15 +4,15 @@ body, button, input, select, textarea, table, th, td {
 
 .parent {
 	display: grid;
-	grid-template-columns: 0.5fr repeat(13, 1fr) 10fr repeat(4, 1fr) 0.5fr;
+	grid-template-columns: repeat(13, 1fr) 10fr repeat(4, 1fr);
 	grid-template-rows: 1fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
-	padding: 10px 0 10px 0;
+	padding: 10px;
 }
 
 .div-settings {
-	grid-area: 1 / 16 / 2 / 20;
+	grid-area: 1 / 15 / 2 / 19;
 	display: flex;
 	justify-content: right;
 	min-width: 147px;
@@ -21,7 +21,7 @@ body, button, input, select, textarea, table, th, td {
 }
 
 .div-packages {
-	grid-area: 1 / 2 / 2 / 15;
+	grid-area: 1 / 1 / 2 / 14;
 	display: flex;
 	justify-content: left;
 	min-width: 1312px;
@@ -82,7 +82,7 @@ body, button, input, select, textarea, table, th, td {
 /* TABLE */
 
 .table-container {
-	padding: 0 18px;
+	padding: 0 10px;
 	font-size: x-small;
 }
 

@@ -81,6 +81,10 @@ function createTableHeaders(headers) {
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
 
+    // Create a header for the row index, i.e., "No."
+    thNo = createTableHeader('No.');
+    headerRow.appendChild(thNo);
+
     headers.forEach(headerText => {
         const th = createTableHeader(headerText);
         headerRow.appendChild(th);
@@ -108,8 +112,10 @@ function createTableBody(data) {
     */
     const tbody = document.createElement('tbody');
 
-    data.forEach(rowData => {
+    data.forEach((rowData, rowIndex) => {
         const row = document.createElement('tr');
+        const trIndex = createTableCell(rowIndex + 1); // Row index starts from 1
+        row.appendChild(trIndex); // Add the row index as the first cell
         rowData.forEach(cellData => {
             const td = createTableCell(cellData);
             row.appendChild(td);
