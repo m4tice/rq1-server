@@ -64,6 +64,9 @@ function createButton(buttonText) {
 }
 
 function createTable(headers, data) {
+    /*
+    create a table with <thead> and <tbody> elements.
+    */
     const tableRq1 = document.getElementById('tableRq1');
     const thead = createTableHeaders(headers);
     const tbody = createTableBody(data);
@@ -72,6 +75,9 @@ function createTable(headers, data) {
 }
 
 function createTableHeaders(headers) {
+    /*
+    create <thead> of the table with <th> elements for each header.
+    */
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
 
@@ -86,6 +92,10 @@ function createTableHeaders(headers) {
 }
 
 function createTableHeader(headerText) {
+    /*
+    create <th> for <thead> of the table.
+    */
+
     const th = document.createElement('th');
     th.textContent = createFirstCharUpperCase(headerText);
 
@@ -93,6 +103,9 @@ function createTableHeader(headerText) {
 }
 
 function createTableBody(data) {
+    /*
+    create <tbody> of the table
+    */
     const tbody = document.createElement('tbody');
 
     data.forEach(rowData => {
@@ -108,6 +121,7 @@ function createTableBody(data) {
 }
 
 function createTableCell(cellData) {
+    // create a <td> element for <tr> of the <tbody>
     const td = document.createElement('td');
     td.textContent = cellData;
 
@@ -115,5 +129,19 @@ function createTableCell(cellData) {
 }
 
 function createFirstCharUpperCase(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    /*
+    createFirstCharUpperCase takes a string and returns it with the first character in uppercase and the rest in lowercase.
+    This is useful for creating consistent button IDs and table headers.
+    Example: "example" becomes "Example".
+    If the string is empty, it returns 'undefined'.
+    */
+   if (str.length === 0) {
+        return undefined;
+    }
+    else if (str.length === 1) {
+        return str.toUpperCase();
+    }
+    else if (str.length > 1) {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
 }
