@@ -3,28 +3,26 @@ body, button, input, select, textarea, table, th, td {
 }
 
 .parent {
-	display: grid;
-	grid-template-columns: repeat(13, 1fr) 10fr repeat(4, 1fr);
-	grid-template-rows: 1fr;
-	grid-column-gap: 0px;
-	grid-row-gap: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	padding: 10px;
+	width: 100%;
 }
 
 .div-settings {
-	grid-area: 1 / 15 / 2 / 19;
 	display: flex;
-	justify-content: right;
-	min-width: 147px;
+	justify-content: space-between;
+	max-width: 147px;
 	width: 100%;
 	gap: 1px;
+	border-radius: 0;
 }
 
 .div-packages {
-	grid-area: 1 / 1 / 2 / 14;
 	display: flex;
-	justify-content: left;
-	min-width: 1312px;
+	justify-content: flex-start;
+	max-width: 1312px;
 	width: 100%;
 	gap: 1px;
 }
@@ -42,7 +40,7 @@ body, button, input, select, textarea, table, th, td {
 
 	/* Shape and color */
 	background-color: #f6f8fa;
-	border: 1px solid #d1d9e0;
+	border: none;
 	border-radius: 0;
 
 	max-height: 35px;
@@ -50,13 +48,12 @@ body, button, input, select, textarea, table, th, td {
 }
 
 .btn-package {
-    min-width: 100px;
-    max-width: 100%;
+	width: 100px !important;
 }
 
 .btn-setting {
-	min-width: 36px;
-    max-width: 100%;
+	width: 36px !important;
+	flex: 0 0 36px !important;
 }
 
 
@@ -72,15 +69,7 @@ body, button, input, select, textarea, table, th, td {
 	border-radius: 10px  !important;
 }
 
-.empty {
-	background-color: transparent !important;
-	border: none !important;
-	color: transparent !important;
-	min-width: 36px !important;
-}
-
 /* TABLE */
-
 .table-container {
 	padding: 0 10px;
 	font-size: x-small;
@@ -94,4 +83,8 @@ table th:first-child {
 table td + td,
 table th + th {
     border-left: none !important;
+}
+
+* { 
+	outline: 1px solid red;
 }

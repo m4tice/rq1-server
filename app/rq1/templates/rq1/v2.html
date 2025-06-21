@@ -14,35 +14,40 @@
 
 <body>
     <div class="parent">
+        <div class="div-packages">
+            <!-- Handled by v2.js -->
+        </div>
         <div class="div-settings btn-group" role="group" aria-label="Settings">
             <input type="checkbox" class="btn-check" id="buttonDarkMode" autocomplete="off">
-            <label class="btn btn-outline-primary btn-first" for="buttonDarkMode"><i class="bi bi-moon"></i></label>
+            <label class="btn btn-outline-primary btn-setting btn-first" for="buttonDarkMode">
+                <i class="bi bi-moon"></i>
+            </label>
 
             <input type="checkbox" class="btn-check" id="buttonDebug" autocomplete="off">
-            <label class="btn btn-outline-primary" for="buttonDebug"><i class="bi bi-bug"></i></label>
+            <label class="btn btn-outline-primary btn-setting" for="buttonDebug">
+                <i class="bi bi-bug"></i>
+            </label>
 
             <input type="checkbox" class="btn-check" id="buttonSetting1" autocomplete="off">
-            <label class="btn btn-outline-primary" for="buttonSetting1"><i
-                    class="bi bi-three-dots-vertical"></i></label>
+            <label class="btn btn-outline-primary btn-setting" for="buttonSetting1">
+                <i class="bi bi-arrow-bar-down"></i>
+            </label>
 
             <!-- <input type="checkbox" class="btn-check" id="buttonSetting2" autocomplete="off">
-            <label class="btn btn-outline-primary btn-last" for="buttonSetting2"><i
-                    class="bi bi-three-dots-vertical"></i></label> -->
+            <label class="btn btn-outline-primary btn-setting btn-last" for="buttonSetting2">
+                <i class="bi bi-three-dots-vertical"></i>
+            </label> -->
 
-            <div class="dropdown">
-                <button id="buttonSetting2" class="btn btn-secondary dropdown-toggle btn-last" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    
-                </button>
-                <ul class="dropdown-menu">
+            <!-- <div class="dropdown">  -->
+            <button id="buttonSetting2" class="btn btn-secondary btn-setting dropdown-toggle btn-last" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+            </button>
+            <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">1</a></li>
                     <li><a class="dropdown-item" href="#">2</a></li>
                     <li><a class="dropdown-item" href="#">3</a></li>
                 </ul>
             </div>
-        </div>
-        <div class="div-packages">
-            <!-- Handled by v2.js -->
         </div>
     </div>
     <div class="table-container">
