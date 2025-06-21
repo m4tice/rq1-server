@@ -11,12 +11,17 @@ model_rq1 = DBModel(DATABASE_RQ1)
 model_rq1.DEBUG = True
 
 packages = ['Alle',
-            'ComServices',
+            'ComSrv',
             'ComVeh',
             'ComCo',
-            'ComPtc',
+            'ComStd',
+            'ComDrv',
             'ComDia',
-            'LinStack',
+            'ComPtc',
+            'CAN',
+            'FlexRay',
+            'Ethernet',
+            'LIN',
             'SENT']
 
 # User data

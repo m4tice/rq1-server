@@ -1,0 +1,90 @@
+body, button, input, select, textarea, table, th, td {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif !important;
+}
+
+.parent {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	width: 100%;
+}
+
+.div-settings {
+	display: flex;
+	justify-content: space-between;
+	max-width: 147px;
+	width: 100%;
+	gap: 1px;
+	border-radius: 0;
+}
+
+.div-packages {
+	display: flex;
+	justify-content: flex-start;
+	max-width: 1312px;
+	width: 100%;
+	gap: 1px;
+}
+
+.btn {
+	/* Text */
+	font-size: 75%;
+	font-weight: normal;
+	text-align: center;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	color: black;
+
+	/* Shape and color */
+	background-color: #f6f8fa;
+	border: none;
+	border-radius: 0;
+
+	max-height: 35px;
+	min-height: 35px;
+}
+
+.btn-package {
+	width: 100px !important;
+}
+
+.btn-setting {
+	width: 36px !important;
+	flex: 0 0 36px !important;
+}
+
+
+.btn-first {
+	border-radius: 10px 0 0 10px  !important;
+}
+
+.btn-last {
+	border-radius: 0 10px 10px 0  !important;
+}
+
+.btn-single {
+	border-radius: 10px  !important;
+}
+
+/* TABLE */
+.table-container {
+	padding: 0 10px;
+	font-size: x-small;
+}
+
+table td:first-child,
+table th:first-child {
+    border-right: none !important;
+}
+
+table td + td,
+table th + th {
+    border-left: none !important;
+}
+
+* { 
+	outline: 1px solid red;
+}
