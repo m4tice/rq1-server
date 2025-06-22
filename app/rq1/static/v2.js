@@ -60,6 +60,20 @@ function createButton(buttonText) {
     button.textContent = buttonText;
     button.id = 'btn' + createFirstCharUpperCase(buttonText);
 
+    button.onclick = function () {
+        console.log("[DEBUG] Button '" + button.id + "' clicked.");
+        fetch(`/rq1/data/${buttonText}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("[DEBUG] Fetched data for button '" + button.id + "': ", data);
+            });
+    }
+
     return button;
 }
 
