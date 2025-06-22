@@ -2,7 +2,7 @@ body, button, input, select, textarea, table, th, td {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif !important;
 }
 
-.parent {
+.btnGroup {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;

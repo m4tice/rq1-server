@@ -10,7 +10,7 @@ async function main() {
 
 function onButtonClick() {
     const buttonDarkMode = document.getElementById('buttonDarkMode');
-    const buttonDebug    = document.getElementById('buttonDebug');
+    const buttonDebug = document.getElementById('buttonDebug');
     const buttonSetting1 = document.getElementById('buttonSetting1');
     const buttonSetting2 = document.getElementById('buttonSetting2');
 
@@ -34,16 +34,19 @@ function createElements(data) {
 async function fetchData() {
     const response = await fetch('/rq1/data');
     const data = await response.json();
-    console.log("[DEBUG] Fetched data: ", data);
 
     return data;
 }
 
 function createButtons(buttonTexts) {
-    const divPackages = document.getElementsByClassName('div-packages')[0];
+    const divPackages = document.getElementById('btnPackageGroup');
+
+    while (divPackages.firstChild) {
+        divPackages.removeChild(divPackages.firstChild);
+    }
+
     buttonTexts.forEach(buttonText => {
         const button = createButton(buttonText);
-        console.log("[DEBUG] Creating button: ", button);
         divPackages.appendChild(button);
     });
 
@@ -61,7 +64,6 @@ function createButton(buttonText) {
     button.id = 'btn' + createFirstCharUpperCase(buttonText);
 
     button.onclick = function () {
-        console.log("[DEBUG] Button '" + button.id + "' clicked.");
         fetch(`/rq1/data/${buttonText}`, {
             method: 'GET',
             headers: {
@@ -70,7 +72,7 @@ function createButton(buttonText) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("[DEBUG] Fetched data for button '" + button.id + "': ", data);
+                createElements(data);
             });
     }
 
@@ -81,7 +83,18 @@ function createTable(headers, data) {
     /*
     create a table with <thead> and <tbody> elements.
     */
-    const tableRq1 = document.getElementById('tableRq1');
+    // If the table already exists, remove it before creating a new one
+    if (document.querySelector('#tableRq1')) {
+        document.querySelector('#tableRq1').remove();
+    }
+
+    const tableRq1 = document.createElement('table');
+    tableRq1.id = 'tableRq1';
+    tableRq1.className = 'table table-borderless table-hover';
+
+    const tableRq1Container = document.getElementById('tableRq1Container');
+    tableRq1Container.appendChild(tableRq1);
+    
     const thead = createTableHeaders(headers);
     const tbody = createTableBody(data);
     tableRq1.appendChild(thead);
@@ -155,7 +168,7 @@ function createFirstCharUpperCase(str) {
     Example: "example" becomes "Example".
     If the string is empty, it returns 'undefined'.
     */
-   if (str.length === 0) {
+    if (str.length === 0) {
         return undefined;
     }
     else if (str.length === 1) {
