@@ -99,6 +99,8 @@ function createTable(headers, data) {
     const tbody = createTableBody(data);
     tableRq1.appendChild(thead);
     tableRq1.appendChild(tbody);
+
+    createFilterDropdown(headers, data);
 }
 
 function createTableHeaders(headers) {
@@ -177,4 +179,72 @@ function createFirstCharUpperCase(str) {
     else if (str.length > 1) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
+}
+
+function createFilterDropdown(headers, data) {
+    const thead = document.querySelector('#tableRq1 thead');
+    const filterRow = document.createElement('tr');
+
+    const thNoFilter = document.createElement('th');
+    filterRow.appendChild(thNoFilter);
+
+    headers.forEach((header, colIdx) => {
+        // Create dropdown filter elements for each header
+        const th = document.createElement('th');
+
+        const select = document.createElement('select');
+        select.className = 'form-select form-select-sm';
+        select.style.fontSize = 'xx-small';
+
+        // retrive unique items in the column
+        const headerFilterData = ['All', ...getUniqueColumnItems(data, colIdx)];
+        headerFilterData.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.textContent = item;
+            select.appendChild(option);
+        });
+
+        select.addEventListener('change', function () {
+            const selectedValue = this.value;
+            const tbody = document.querySelector('#tableRq1 tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+
+            // Attention: Performance
+            // Remarks  : may be slow for large datasets
+            let filterIdx = 0;
+            data.forEach(rowData => {
+                if (selectedValue === 'All' || rowData[colIdx] === selectedValue) {
+                    filterIdx++;
+                    const row = document.createElement('tr');
+                    const trIndex = createTableCell(filterIdx); // Row index starts from 1
+                    row.appendChild(trIndex); // Add the row index as the first cell
+
+                    // Add the row data cells
+                    // Attention: Performance
+                    rowData.forEach(cellData => {
+                        const td = createTableCell(cellData);
+                        row.appendChild(td);
+                    });
+                    tbody.appendChild(row);
+                }
+            });
+        });
+        th.appendChild(select);
+        filterRow.appendChild(th);
+    });
+    thead.appendChild(filterRow);
+}
+
+function getUniqueColumnItems(data, colIdx) {
+    /*
+    getUniqueColumnItems takes a 2D array (data) and a column index (colIdx).
+    It returns a sorted array of unique items in the specified column.
+    */
+    const columnData = data.map(row => row[colIdx]);
+    const uniqueItems = [...new Set(columnData)];
+
+    // Attention: Performance
+    // Remarks  : may be slow for large datasets
+    return uniqueItems.sort((a, b) => a.localeCompare(b));
 }
