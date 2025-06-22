@@ -85,6 +85,11 @@ table th + th {
     border-left: none !important;
 }
 
-* { 
+/* * { 
 	outline: 1px solid red;
+} */
+
+.btn-setting.dropdown-toggle::after {
+    display: none;
 }
+
