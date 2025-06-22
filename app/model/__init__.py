@@ -11,7 +11,7 @@ model_rq1 = DBModel(DATABASE_RQ1)
 model_rq1.DEBUG = True
 
 packages = ['Alle',
-            'ComSrv',
+            'ComServices',
             'ComVeh',
             'ComCo',
             'ComStd',
