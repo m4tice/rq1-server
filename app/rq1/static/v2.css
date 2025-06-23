@@ -228,3 +228,20 @@ body.dark-mode tbody tr:hover {
 body.dark-mode tbody tr:hover td {
     color: #000 !important;
 }
+
+body.dark-mode .dropdown-menu {
+    background-color: #23272a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .dropdown-menu .dropdown-item {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item:hover,
+body.dark-mode .dropdown-menu .dropdown-item:focus {
+    background-color: #444 !important;
+    color: #fff !important;
+}
