@@ -1,78 +1,88 @@
-body, button, input, select, textarea, table, th, td {
+/* =====================
+   Base Styles & Layout
+   ===================== */
+body,
+button,
+input,
+select,
+textarea,
+table,
+th,
+td {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif !important;
 }
 
 .btnGroup {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 10px;
-	width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    width: 100%;
 }
 
 .div-settings {
-	display: flex;
-	justify-content: space-between;
-	max-width: 147px;
-	width: 100%;
-	gap: 1px;
-	border-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    max-width: 147px;
+    width: 100%;
+    gap: 1px;
+    border-radius: 0;
 }
 
 .div-packages {
-	display: flex;
-	justify-content: flex-start;
-	max-width: 1312px;
-	width: 100%;
-	gap: 1px;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 1312px;
+    width: 100%;
+    gap: 1px;
 }
 
+/* =====================
+   Button Styles
+   ===================== */
 .btn {
-	/* Text */
-	font-size: 75%;
-	font-weight: normal;
-	text-align: center;
+    font-size: 75%;
+    font-weight: normal;
+    text-align: center;
     vertical-align: middle;
     display: flex;
     align-items: center;
     justify-content: center;
-	color: black;
-
-	/* Shape and color */
-	background-color: #f6f8fa;
-	border: none;
-	border-radius: 0;
-
-	max-height: 35px;
-	min-height: 35px;
+    color: black;
+    background-color: #f6f8fa;
+    border: none;
+    border-radius: 0;
+    max-height: 35px;
+    min-height: 35px;
 }
 
 .btn-package {
-	width: 100px !important;
+    width: 100px !important;
 }
 
 .btn-setting {
-	width: 36px !important;
-	flex: 0 0 36px !important;
+    width: 36px !important;
+    flex: 0 0 36px !important;
 }
 
-
 .btn-first {
-	border-radius: 10px 0 0 10px  !important;
+    border-radius: 10px 0 0 10px !important;
 }
 
 .btn-last {
-	border-radius: 0 10px 10px 0  !important;
+    border-radius: 0 10px 10px 0 !important;
 }
 
 .btn-single {
-	border-radius: 10px  !important;
+    border-radius: 10px !important;
 }
 
-/* TABLE */
+/* =====================
+   Table Styles
+   ===================== */
 .table-container {
-	padding: 0 10px;
-	font-size: x-small;
+    padding: 0 10px;
+    font-size: x-small;
 }
 
 table td:first-child,
@@ -80,19 +90,19 @@ table th:first-child {
     border-right: none !important;
 }
 
-table td + td,
-table th + th {
+table td+td,
+table th+th {
     border-left: none !important;
 }
 
-/* * { 
-	outline: 1px solid red;
-} */
-
+/* .btn-setting.dropdown-toggle::after hides the default dropdown arrow */
 .btn-setting.dropdown-toggle::after {
     display: none;
 }
 
+/* =====================
+   Dropdown & Filter Styles
+   ===================== */
 .dropdown-item {
     font-size: x-small;
 }
@@ -110,10 +120,10 @@ table th + th {
     overflow-y: auto;
     color: #222;
     min-width: 140px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     font-size: 10px;
-	font-weight: 100;
+    font-weight: 100;
 }
 
 .filter-dropdown label {
@@ -169,40 +179,34 @@ th:focus-within .filter-dropdown {
     margin-bottom: 5px !important;
 }
 
-/* --- Dark Mode --- */
+/* =====================
+   Dark Mode Styles
+   ===================== */
 body.dark-mode {
     background-color: #181a1b !important;
     color: #e0e0e0 !important;
 }
 
-body.dark-mode .btn {
-    background-color: #23272a !important;
-    color: #e0e0e0 !important;
-}
-
-body.dark-mode .btn-package {
-    background-color: #23272a !important;
-}
-
+body.dark-mode .btn,
+body.dark-mode .btn-package,
 body.dark-mode .btn-setting {
     background-color: #23272a !important;
+    color: #e0e0e0 !important;
 }
 
 body.dark-mode .table,
 body.dark-mode table,
 body.dark-mode th,
 body.dark-mode td {
-    /* background-color: #23272a !important; */
     background-color: transparent !important;
     color: #e0e0e0 !important;
-    border-color: #444 !important;
 }
 
 body.dark-mode .filter-dropdown {
     background-color: #23272a !important;
     color: #e0e0e0 !important;
     border-color: #444 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 body.dark-mode .filter-dropdown input[type="checkbox"] {
@@ -237,7 +241,7 @@ body.dark-mode .dropdown-menu {
     background-color: #23272a !important;
     color: #e0e0e0 !important;
     border-color: #444 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 body.dark-mode .dropdown-menu .dropdown-item {
@@ -250,6 +254,9 @@ body.dark-mode .dropdown-menu .dropdown-item:focus {
     color: #fff !important;
 }
 
+/* =====================
+   Transitions & Effects
+   ===================== */
 body,
 .btn,
 .btn-package,
@@ -262,5 +269,22 @@ td,
 .filter-search-box,
 .dropdown-menu,
 .dropdown-item {
-    transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* =====================
+   Border Transparency
+   ===================== */
+.table.border-transparent,
+table.border-transparent,
+th.border-transparent,
+td.border-transparent {
+    border-color: #dee2e6 !important;
+}
+
+body.dark-mode .table.border-transparent,
+body.dark-mode table.border-transparent,
+body.dark-mode th.border-transparent,
+body.dark-mode td.border-transparent {
+    border-color: #6f6b71 !important;
 }

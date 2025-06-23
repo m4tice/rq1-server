@@ -72,7 +72,8 @@ function renderTable(headers, data) {
     if (table) table.remove();
     table = document.createElement('table');
     table.id = 'tableRq1';
-    table.className = 'table table-borderless table-hover';
+    table.className = 'table table-bordered table-hover';
+    table.style.borderColor = 'transparent';
     table.appendChild(createTableHeaders(headers, data));
     table.appendChild(createTableBody(data));
     tableContainer.appendChild(table);
@@ -216,7 +217,6 @@ function onDarkModeClicked() {
 function onBorderClicked() {
     const table = document.getElementById('tableRq1');
     if (table) {
-        table.classList.toggle('table-borderless');
-        table.classList.toggle('table-bordered');
+        table.classList.toggle('border-transparent');
     }
 }
