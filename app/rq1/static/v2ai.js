@@ -14,6 +14,10 @@ function setupButtonListeners() {
         if (btn) {
             btn.addEventListener('click', () => {
                 console.log(`[DEBUG] Button '${btn.id.split('button')[1]}': ${btn.checked}`);
+
+                if (btn.id === 'buttonDarkMode') {
+                    onDarkModeClicked();
+                }
             });
         }
     });
@@ -188,4 +192,20 @@ function capitalize(str) {
 
 function textOrEmpty(str) {
     return typeof str === 'string' ? str : '';
+}
+
+function onDarkModeClicked() {
+    document.body.classList.toggle('dark-mode');
+
+    // Toggle icon between moon and sun
+    const darkModeLabel = document.querySelector('label[for="buttonDarkMode"] i');
+    if (darkModeLabel) {
+        if (document.body.classList.contains('dark-mode')) {
+            darkModeLabel.classList.remove('bi-moon');
+            darkModeLabel.classList.add('bi-sun');
+        } else {
+            darkModeLabel.classList.remove('bi-sun');
+            darkModeLabel.classList.add('bi-moon');
+        }
+    }
 }
