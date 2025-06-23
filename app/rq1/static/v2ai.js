@@ -8,7 +8,7 @@ async function main() {
 }
 
 function setupButtonListeners() {
-    const buttonIds = ['buttonDarkMode', 'buttonDebug', 'buttonSetting1', 'buttonSetting2'];
+    const buttonIds = ['buttonDarkMode', 'buttonBorder', 'buttonSetting1', 'buttonSetting2'];
     buttonIds.forEach(id => {
         const btn = document.getElementById(id);
         if (btn) {
@@ -17,6 +17,9 @@ function setupButtonListeners() {
 
                 if (btn.id === 'buttonDarkMode') {
                     onDarkModeClicked();
+                }
+                else if (btn.id === 'buttonBorder') {
+                    onBorderClicked();
                 }
             });
         }
@@ -207,5 +210,13 @@ function onDarkModeClicked() {
             darkModeLabel.classList.remove('bi-sun');
             darkModeLabel.classList.add('bi-moon');
         }
+    }
+}
+
+function onBorderClicked() {
+    const table = document.getElementById('tableRq1');
+    if (table) {
+        table.classList.toggle('table-borderless');
+        table.classList.toggle('table-bordered');
     }
 }

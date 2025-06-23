@@ -249,3 +249,18 @@ body.dark-mode .dropdown-menu .dropdown-item:focus {
     background-color: #444 !important;
     color: #fff !important;
 }
+
+body,
+.btn,
+.btn-package,
+.btn-setting,
+.table,
+table,
+th,
+td,
+.filter-dropdown,
+.filter-search-box,
+.dropdown-menu,
+.dropdown-item {
+    transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+}
