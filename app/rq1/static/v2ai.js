@@ -113,8 +113,18 @@ function createColumnFilterDropdown(data, idx) {
     const dropDownDiv = document.createElement('div');
     dropDownDiv.className = 'filter-dropdown';
     dropDownDiv.setAttribute('data-column', idx);
+
+    // Create search box
+    const searchBox = document.createElement('input');
+    searchBox.type = 'text';
+    searchBox.placeholder = 'Search...';
+    searchBox.className = 'filter-search-box';
+    searchBox.addEventListener('input', () => filterDropdownOptions(dropDownDiv, searchBox.value));
+    dropDownDiv.appendChild(searchBox);
+
     const unique = ['All', ...Array.from(new Set(data.filter(x => x !== undefined && x !== null && x !== ''))).sort()];
     unique.forEach(item => dropDownDiv.appendChild(createCheckbox(item)));
+
     const checkboxAll = dropDownDiv.querySelector('label.select-all input[type="checkbox"]');
     if (checkboxAll) {
         checkboxAll.addEventListener('change', () => onSelectAllCheckboxChange(dropDownDiv));
@@ -123,6 +133,16 @@ function createColumnFilterDropdown(data, idx) {
         checkbox.addEventListener('change', () => onCheckboxChange(dropDownDiv));
     });
     return dropDownDiv;
+}
+
+// Helper to filter dropdown options based on search
+function filterDropdownOptions(dropdown, searchValue) {
+    const filter = searchValue.trim().toLowerCase();
+    dropdown.querySelectorAll('label').forEach(label => {
+        if (label.classList.contains('select-all')) return; // Always show 'All'
+        const text = label.textContent.toLowerCase();
+        label.style.display = text.includes(filter) ? '' : 'none';
+    });
 }
 
 function createCheckbox(labelText) {

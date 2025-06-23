@@ -161,3 +161,6 @@ th:focus-within .filter-dropdown {
     display: block;
 }
 
+.filter-search-box {
+    margin-bottom: 5px !important;
+}
