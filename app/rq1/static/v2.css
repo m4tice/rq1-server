@@ -93,6 +93,10 @@ table th + th {
     display: none;
 }
 
+.dropdown-item {
+    font-size: x-small;
+}
+
 .filter-dropdown {
     display: none;
     position: absolute;
