@@ -220,3 +220,11 @@ body.dark-mode .btn:hover {
     background-color: #1759c5 !important;
     color: #fff !important;
 }
+
+body.dark-mode tbody tr:hover {
+    background-color: #f6f8fa !important;
+}
+
+body.dark-mode tbody tr:hover td {
+    color: #000 !important;
+}
