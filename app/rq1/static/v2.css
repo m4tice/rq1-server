@@ -93,3 +93,71 @@ table th + th {
     display: none;
 }
 
+.filter-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    padding: 8px 12px;
+    max-height: 220px;
+    overflow-y: auto;
+    color: #222;
+    min-width: 140px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    border-radius: 4px;
+    font-size: 10px;
+	font-weight: 100;
+}
+
+.filter-dropdown label {
+    display: block;
+    margin-bottom: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.filter-dropdown input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 4px;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 6px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.filter-dropdown input[type="checkbox"]:checked {
+    background: #fff;
+}
+
+.filter-dropdown input[type="checkbox"]:checked::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+th {
+    position: relative;
+}
+
+th:hover .filter-dropdown,
+th:focus-within .filter-dropdown {
+    display: block;
+}
+

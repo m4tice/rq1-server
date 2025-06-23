@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 async function main() {
+    console.log('[DEBUG] powered by v2.js.');
     onButtonClick();
     const data = await fetchData();
     createElements(data);
@@ -94,16 +95,16 @@ function createTable(headers, data) {
 
     const tableRq1Container = document.getElementById('tableRq1Container');
     tableRq1Container.appendChild(tableRq1);
-    
-    const thead = createTableHeaders(headers);
+
+    const thead = createTableHeaders(headers, data);
     const tbody = createTableBody(data);
     tableRq1.appendChild(thead);
     tableRq1.appendChild(tbody);
 
-    createFilterDropdown(headers, data);
+    // createFilterDropdown(headers, data);
 }
 
-function createTableHeaders(headers) {
+function createTableHeaders(headers, data) {
     /*
     create <thead> of the table with <th> elements for each header.
     */
@@ -114,8 +115,10 @@ function createTableHeaders(headers) {
     thNo = createTableHeader('No.');
     headerRow.appendChild(thNo);
 
-    headers.forEach(headerText => {
+    headers.forEach((headerText, colIdx) => {
         const th = createTableHeader(headerText);
+        const filterDropdown = createColumnFilterDropdown(data.map(row => row[colIdx]), colIdx + 1);
+        th.appendChild(filterDropdown);
         headerRow.appendChild(th);
     });
 
@@ -234,6 +237,90 @@ function createFilterDropdown(headers, data) {
         filterRow.appendChild(th);
     });
     thead.appendChild(filterRow);
+}
+
+function createColumnFilterDropdown(data, idx) {
+    const dropDownDiv = document.createElement('div');
+    dropDownDiv.className = 'filter-dropdown';
+    dropDownDiv.setAttribute('data-column', idx);
+
+    const unique = ['All', ...Array.from(new Set(data.filter(x => x !== undefined && x !== null && x !== '')))];
+
+    unique.forEach(item => {
+        const filterElement = createCheckbox(item);
+        dropDownDiv.appendChild(filterElement);
+    });
+
+    const checkboxAll = dropDownDiv.querySelector('label.select-all input[type="checkbox"]');
+    checkboxAll.addEventListener('change', function () {
+        onSelectAllCheckboxChange(dropDownDiv);
+    });
+
+    const checkboxes = dropDownDiv.querySelectorAll('input[type="checkbox"]:not([value="All"])');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            onCheckboxChange(dropDownDiv);
+        });
+    });
+    return dropDownDiv;
+}
+
+function createCheckbox(labelText) {
+    const label = document.createElement('label');
+    const checkbox = document.createElement('input');
+
+    if (labelText === 'All') {
+        label.className = 'select-all';
+    }
+
+    checkbox.type = 'checkbox';
+    checkbox.checked = true;
+    checkbox.value = labelText;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(labelText));
+
+    return label;
+}
+
+function onSelectAllCheckboxChange(dropdown) {
+    const allCheckbox = dropdown.querySelector('label.select-all input[type="checkbox"]');
+    const checkboxes = Array.from(dropdown.querySelectorAll('input[type="checkbox"]:not([value="All"])'));
+    if (allCheckbox.checked) {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true; // Check all checkboxes if 'All' is selected
+            document.querySelectorAll('#tableRq1 tbody tr').forEach(row => {
+                row.style.display = ''; // Show all rows
+            });
+        });
+    } else {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false; // Uncheck all checkboxes if 'All' is not selected
+        });
+    }
+}
+
+function onCheckboxChange(dropdown) {
+    const columnIndex = parseInt(dropdown.dataset.column, 10);
+    const selectedValues = Array.from(dropdown.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+
+
+    document.querySelectorAll('#tableRq1 tbody tr').forEach(row => {
+        const cell = row.cells[columnIndex];
+
+        if (selectedValues.includes('All')) {
+            row.style.display = ''; // Show the row if 'All' is selected
+            return;
+        }
+
+        else {
+            if (cell && selectedValues.includes(cell.textContent)) {
+                row.style.display = ''; // Show the row
+            }
+            else {
+                row.style.display = 'none'; // Hide the row
+            }
+        }
+    });
 }
 
 function getUniqueColumnItems(data, colIdx) {
