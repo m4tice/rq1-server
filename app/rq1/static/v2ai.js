@@ -34,6 +34,7 @@ async function fetchData() {
 function renderElements(data) {
     renderButtons(data.packages);
     renderTable(data.headers, data.data);
+    setFixedColumns();
 }
 
 function renderButtons(buttonTexts) {
@@ -219,4 +220,22 @@ function onBorderClicked() {
     if (table) {
         table.classList.toggle('border-transparent');
     }
+}
+
+function setFixedColumns() {
+    const widths = [34, 102, 280, 82, 89, 147, 109, 108, 94, 100, 70, 84, 112, 65];
+
+    widths.forEach((width, index) => {
+        const th = document.querySelector(`#tableRq1 thead th:nth-child(${index + 1})`);
+        if (th) {
+            th.style.width = `${width}px`;
+            th.style.minWidth = `${width}px`;
+        }
+        const td = document.querySelectorAll(`#tableRq1 tbody td:nth-child(${index + 1})`);
+        td.forEach(cell => {
+            cell.style.width = `${width}px`;
+            cell.style.minWidth = `${width}px`;
+        });
+    }
+    );
 }
