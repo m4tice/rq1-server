@@ -77,6 +77,16 @@ td {
     border-radius: 10px !important;
 }
 
+.btn-feature {
+    border-radius: 6px;
+}
+
+#buttonFeature1:hover,
+.btn-feature:hover {
+    color: #0d6efd !important;
+    background-color: #fff !important;
+}
+
 /* =====================
    Table Styles
    ===================== */
@@ -254,6 +264,11 @@ body.dark-mode .dropdown-menu .dropdown-item:focus {
     color: #fff !important;
 }
 
+body.dark-mode #buttonFeature1:hover {
+    color: #fff !important;
+    background-color: #1759c5 !important;
+}
+
 /* =====================
    Transitions & Effects
    ===================== */
@@ -287,4 +302,32 @@ body.dark-mode table.border-transparent,
 body.dark-mode th.border-transparent,
 body.dark-mode td.border-transparent {
     border-color: #6f6b71 !important;
+}
+
+#buttonNuke span,
+#buttonCola span {
+    display: inline-block;
+}
+
+#buttonNuke:hover span,
+#buttonCola:hover span {
+    display: none !important;
+}
+
+#buttonNuke:hover::before {
+    font-family: 'bootstrap-icons' !important;
+    content: "\f67b"; /* Unicode for bi-radioactive */
+    /* font-size: 18px; */
+    color: #0d6efd;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#buttonCola:hover::before {
+    font-family: 'bootstrap-icons' !important;
+    content: "\f2df"; /* Unicode for bi-radioactive */
+    /* font-size: 18px; */
+    color: #0d6efd;
+    display: inline-block;
+    vertical-align: middle;
 }

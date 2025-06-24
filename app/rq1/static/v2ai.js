@@ -12,7 +12,7 @@ async function main() {
 // Button Listeners
 // =====================
 function setupButtonListeners() {
-    const buttonIds = ['buttonDarkMode', 'buttonBorder', 'buttonSetting1', 'buttonSetting2'];
+    const buttonIds = ['buttonDarkMode', 'buttonBorder', 'buttonSimpleView', 'buttonNuke', 'buttonCola', 'buttonUpdateDb', 'buttonGitHub', 'buttonReservedFeature'];
     buttonIds.forEach(id => {
         const btn = document.getElementById(id);
         if (btn) {
@@ -20,6 +20,15 @@ function setupButtonListeners() {
                 console.log(`[DEBUG] Button '${btn.id.split('button')[1]}': ${btn.checked}`);
                 if (btn.id === 'buttonDarkMode') onDarkModeClicked();
                 else if (btn.id === 'buttonBorder') onBorderClicked();
+                else if (btn.id === 'buttonSimpleView') onSimpleViewClicked();
+                else if (btn.id === 'buttonNuke') onNukeClicked();
+                else if (btn.id === 'buttonCola') onColaClicked();
+                else if (btn.id === 'buttonUpdateDb') onUpdateDbClicked();
+                else if (btn.id === 'buttonGitHub') onGitHubClicked();
+                else if (btn.id === 'buttonReservedFeature') onReservedFeatureClicked();
+                else {
+                    // Fallback for any unhandled button
+                }
             });
         }
     });
@@ -244,6 +253,44 @@ function onBorderClicked() {
     if (table) {
         table.classList.toggle('border-transparent');
     }
+    // Toggle icon between bi-border and bi-border-all
+    const borderIcon = document.querySelector('label[for="buttonBorder"] i');
+    if (borderIcon) {
+        if (table && table.classList.contains('border-transparent')) {
+            borderIcon.classList.remove('bi-border-all');
+            borderIcon.classList.add('bi-border');
+        } else {
+            borderIcon.classList.remove('bi-border');
+            borderIcon.classList.add('bi-border-all');
+        }
+    }
+}
+
+function onSimpleViewClicked() {
+    alert('This feature is under development!');
+}
+
+function onNukeClicked() {
+    alert('Whoosh!');
+    window.open('https://www.youtube.com/shorts/NLpMWs2Uq58', '_blank');
+    window.focus();
+}
+
+function onColaClicked() {
+    window.open('https://www.youtube.com/watch?v=qnSZMDmUpa4', '_blank');
+    window.focus();
+}
+
+function onUpdateDbClicked(){
+    alert('This feature is under development!');
+}
+
+function onGitHubClicked() {
+    window.open('https://github.com/m4tice/rq1-server', '_blank');
+}
+
+function onReservedFeatureClicked() {
+    alert('This button is reserved for future development!');
 }
 
 // Table Column Widths
