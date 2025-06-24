@@ -127,6 +127,7 @@ function createColumnFilterDropdown(data, idx) {
     const dropDownDiv = document.createElement('div');
     dropDownDiv.className = 'filter-dropdown';
     dropDownDiv.setAttribute('data-column', idx);
+
     // Search box
     const searchBox = document.createElement('input');
     searchBox.type = 'text';
@@ -134,9 +135,11 @@ function createColumnFilterDropdown(data, idx) {
     searchBox.className = 'filter-search-box';
     searchBox.addEventListener('input', () => filterDropdownOptions(dropDownDiv, searchBox.value));
     dropDownDiv.appendChild(searchBox);
+
     // Unique values
     const unique = ['All', ...Array.from(new Set(data.filter(x => x !== undefined && x !== null && x !== ''))).sort()];
     unique.forEach(item => dropDownDiv.appendChild(createCheckbox(item)));
+
     // Event listeners
     const checkboxAll = dropDownDiv.querySelector('label.select-all input[type="checkbox"]');
     if (checkboxAll) {
@@ -150,6 +153,7 @@ function createColumnFilterDropdown(data, idx) {
 
 function filterDropdownOptions(dropdown, searchValue) {
     const filter = searchValue.trim().toLowerCase();
+
     dropdown.querySelectorAll('label').forEach(label => {
         if (label.classList.contains('select-all')) return;
         const text = label.textContent.toLowerCase();
@@ -159,7 +163,9 @@ function filterDropdownOptions(dropdown, searchValue) {
 
 function createCheckbox(labelText) {
     const label = document.createElement('label');
+
     if (labelText === 'All') label.className = 'select-all';
+
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = true;
@@ -174,10 +180,21 @@ function createCheckbox(labelText) {
 function onSelectAllCheckboxChange(dropdown) {
     const allCheckbox = dropdown.querySelector('label.select-all input[type="checkbox"]');
     const checkboxes = Array.from(dropdown.querySelectorAll('input[type="checkbox"]:not([value="All"])'));
+    const th = document.querySelector(`#tableRq1 thead th:nth-child(${Number(dropdown.dataset.column) + 1})`);
     if (allCheckbox.checked) {
+        console.log(`[DEBUG] Select All checkbox of col ${dropdown.dataset.column} checked` + th);
+        if (th) {
+            th.style.color = ''; // Reset text color
+            th.style.backgroundColor = ''; // Show the column header
+        }
         checkboxes.forEach(checkbox => { checkbox.checked = true; });
         document.querySelectorAll('#tableRq1 tbody tr').forEach(row => { row.style.display = ''; });
     } else {
+        console.log(`[DEBUG] Select All checkbox of col ${dropdown.dataset.column} unchecked` + th);
+        if (th) {
+            th.style.color = 'black'; // Hide text color
+            th.style.backgroundColor = '#FFE699'; // Hide the column header
+        }
         checkboxes.forEach(checkbox => { checkbox.checked = false; });
     }
 }
