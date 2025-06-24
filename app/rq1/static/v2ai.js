@@ -1,3 +1,5 @@
+// Entry point
+// =====================
 document.addEventListener('DOMContentLoaded', () => main());
 
 async function main() {
@@ -7,6 +9,8 @@ async function main() {
     renderElements(data);
 }
 
+// Button Listeners
+// =====================
 function setupButtonListeners() {
     const buttonIds = ['buttonDarkMode', 'buttonBorder', 'buttonSetting1', 'buttonSetting2'];
     buttonIds.forEach(id => {
@@ -14,27 +18,27 @@ function setupButtonListeners() {
         if (btn) {
             btn.addEventListener('click', () => {
                 console.log(`[DEBUG] Button '${btn.id.split('button')[1]}': ${btn.checked}`);
-
-                if (btn.id === 'buttonDarkMode') {
-                    onDarkModeClicked();
-                }
-                else if (btn.id === 'buttonBorder') {
-                    onBorderClicked();
-                }
+                if (btn.id === 'buttonDarkMode') onDarkModeClicked();
+                else if (btn.id === 'buttonBorder') onBorderClicked();
             });
         }
     });
 }
 
+// Data Fetching
+// =====================
 async function fetchData() {
     const response = await fetch('/rq1/data');
     return response.json();
 }
 
+// Render UI
+// =====================
 function renderElements(data) {
     renderButtons(data.packages);
     renderTable(data.headers, data.data);
     setFixedColumns();
+    evaluateData();
 }
 
 function renderButtons(buttonTexts) {
@@ -76,7 +80,7 @@ function renderTable(headers, data) {
     table.className = 'table table-bordered table-hover';
     table.style.borderColor = 'transparent';
     table.appendChild(createTableHeaders(headers, data));
-    table.appendChild(createTableBody(data));
+    table.appendChild(createTableBody(headers, data));
     tableContainer.appendChild(table);
 }
 
@@ -99,41 +103,41 @@ function createTableHeader(text) {
     return th;
 }
 
-function createTableBody(data) {
+function createTableBody(headers, data) {
     const tbody = document.createElement('tbody');
-    const fragment = document.createDocumentFragment();
     data.forEach((rowData, rowIdx) => {
         const row = document.createElement('tr');
         row.appendChild(createTableCell(rowIdx + 1));
-        rowData.forEach(cellData => row.appendChild(createTableCell(cellData)));
-        fragment.appendChild(row);
+        rowData.forEach((cellData, colIdx) => row.appendChild(createTableCell(cellData, headers[colIdx])));
+        tbody.appendChild(row);
     });
-    tbody.appendChild(fragment);
     return tbody;
 }
 
-function createTableCell(data) {
+function createTableCell(data, className) {
     const td = document.createElement('td');
     td.textContent = data;
+    if (className) td.className = className.toLowerCase() || 'null';
     return td;
 }
 
+// Column Filter Dropdown
+// =====================
 function createColumnFilterDropdown(data, idx) {
     const dropDownDiv = document.createElement('div');
     dropDownDiv.className = 'filter-dropdown';
     dropDownDiv.setAttribute('data-column', idx);
-
-    // Create search box
+    // Search box
     const searchBox = document.createElement('input');
     searchBox.type = 'text';
     searchBox.placeholder = 'Search...';
     searchBox.className = 'filter-search-box';
     searchBox.addEventListener('input', () => filterDropdownOptions(dropDownDiv, searchBox.value));
     dropDownDiv.appendChild(searchBox);
-
+    // Unique values
     const unique = ['All', ...Array.from(new Set(data.filter(x => x !== undefined && x !== null && x !== ''))).sort()];
     unique.forEach(item => dropDownDiv.appendChild(createCheckbox(item)));
-
+    // Event listeners
     const checkboxAll = dropDownDiv.querySelector('label.select-all input[type="checkbox"]');
     if (checkboxAll) {
         checkboxAll.addEventListener('change', () => onSelectAllCheckboxChange(dropDownDiv));
@@ -144,11 +148,10 @@ function createColumnFilterDropdown(data, idx) {
     return dropDownDiv;
 }
 
-// Helper to filter dropdown options based on search
 function filterDropdownOptions(dropdown, searchValue) {
     const filter = searchValue.trim().toLowerCase();
     dropdown.querySelectorAll('label').forEach(label => {
-        if (label.classList.contains('select-all')) return; // Always show 'All'
+        if (label.classList.contains('select-all')) return;
         const text = label.textContent.toLowerCase();
         label.style.display = text.includes(filter) ? '' : 'none';
     });
@@ -166,6 +169,8 @@ function createCheckbox(labelText) {
     return label;
 }
 
+// Filter Logic
+// =====================
 function onSelectAllCheckboxChange(dropdown) {
     const allCheckbox = dropdown.querySelector('label.select-all input[type="checkbox"]');
     const checkboxes = Array.from(dropdown.querySelectorAll('input[type="checkbox"]:not([value="All"])'));
@@ -190,6 +195,8 @@ function onCheckboxChange(dropdown) {
     });
 }
 
+// Utilities
+// =====================
 function capitalize(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -199,10 +206,10 @@ function textOrEmpty(str) {
     return typeof str === 'string' ? str : '';
 }
 
+// Dark Mode & Border Toggle
+// =====================
 function onDarkModeClicked() {
     document.body.classList.toggle('dark-mode');
-
-    // Toggle icon between moon and sun
     const darkModeLabel = document.querySelector('label[for="buttonDarkMode"] i');
     if (darkModeLabel) {
         if (document.body.classList.contains('dark-mode')) {
@@ -222,9 +229,10 @@ function onBorderClicked() {
     }
 }
 
+// Table Column Widths
+// =====================
 function setFixedColumns() {
     const widths = [34, 102, 280, 82, 89, 147, 109, 108, 94, 100, 70, 84, 112, 65];
-
     widths.forEach((width, index) => {
         const th = document.querySelector(`#tableRq1 thead th:nth-child(${index + 1})`);
         if (th) {
@@ -236,6 +244,56 @@ function setFixedColumns() {
             cell.style.width = `${width}px`;
             cell.style.minWidth = `${width}px`;
         });
+    });
+}
+
+// Table Data Evaluation
+// =====================
+function evaluateData() {
+    const tableRq1 = document.getElementById('tableRq1');
+    evaluateLcs(tableRq1);
+    evaluateAllocationAndDoor(tableRq1);
+}
+
+function evaluateLcs(table) {
+    if (!table) return;
+    const colorMap = {
+        'Evaluated': '#FFE699',
+        'Conflicted': '#FFC000'
+    };
+    Array.from(table.getElementsByClassName('lifecyclestate')).forEach(element => {
+        const color = colorMap[element.textContent];
+        if (color) {
+            element.style.backgroundColor = color;
+            element.style.fontWeight = 'bold';
+        }
+    });
+}
+
+function evaluateCategory(table) {
+    // Reserved for future logic
+}
+
+function evaluateAllocationAndDoor(table) {
+    if (!table) return;
+    const dataAllocation = table.getElementsByClassName('allocation');
+    const dataDoors = table.getElementsByClassName('doors');
+    for (let i = 0; i < dataAllocation.length; i++) {
+        const allocation = dataAllocation[i];
+        const doors = dataDoors[i];
+        if (allocation.textContent === 'None') {
+            allocation.style.backgroundColor = '#FFC000';
+            allocation.style.fontWeight = 'bold';
+        } else if (allocation.textContent === 'Software' && doors && doors.textContent === 'None') {
+            cssNullItem(doors);
+        }
     }
-    );
+}
+
+function cssNullItem(item) {
+    Object.assign(item.style, {
+        backgroundColor: '#FF7C80',
+        color: 'white',
+        fontWeight: 'bold'
+    });
 }
