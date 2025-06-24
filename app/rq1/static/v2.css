@@ -198,8 +198,8 @@ body.dark-mode .table,
 body.dark-mode table,
 body.dark-mode th,
 body.dark-mode td {
-    background-color: transparent !important;
-    color: #e0e0e0 !important;
+    background-color: transparent;
+    color: #e0e0e0;
 }
 
 body.dark-mode .filter-dropdown {

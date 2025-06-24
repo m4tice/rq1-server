@@ -264,6 +264,7 @@ function evaluateLcs(table) {
     Array.from(table.getElementsByClassName('lifecyclestate')).forEach(element => {
         const color = colorMap[element.textContent];
         if (color) {
+            element.style.color = 'black';
             element.style.backgroundColor = color;
             element.style.fontWeight = 'bold';
         }
@@ -278,10 +279,12 @@ function evaluateAllocationAndDoor(table) {
     if (!table) return;
     const dataAllocation = table.getElementsByClassName('allocation');
     const dataDoors = table.getElementsByClassName('doors');
+
     for (let i = 0; i < dataAllocation.length; i++) {
         const allocation = dataAllocation[i];
         const doors = dataDoors[i];
         if (allocation.textContent === 'None') {
+            allocation.style.color = 'black';
             allocation.style.backgroundColor = '#FFC000';
             allocation.style.fontWeight = 'bold';
         } else if (allocation.textContent === 'Software' && doors && doors.textContent === 'None') {
