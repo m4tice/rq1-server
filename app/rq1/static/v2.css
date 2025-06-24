@@ -264,9 +264,15 @@ body.dark-mode .dropdown-menu .dropdown-item:focus {
     color: #fff !important;
 }
 
-body.dark-mode #buttonFeature1:hover {
+body.dark-mode #buttonSimpleView:hover {
     color: #fff !important;
     background-color: #1759c5 !important;
+}
+
+body.dark-mode #buttonNuke:hover::before, 
+body.dark-mode #buttonCola:hover::before {
+    /* background-color: #0d6efd !important; */
+    color: #fff !important;
 }
 
 /* =====================
