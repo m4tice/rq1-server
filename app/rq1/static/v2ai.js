@@ -118,6 +118,11 @@ function createTableBody(headers, data) {
         const row = document.createElement('tr');
         row.appendChild(createTableCell(rowIdx + 1));
         rowData.forEach((cellData, colIdx) => row.appendChild(createTableCell(cellData, headers[colIdx])));
+
+        if (rowData[headers.indexOf('lifecyclestate')] === 'Canceled') {
+            row.style.display = 'none'; // Hide canceled rows in simple view
+        }
+
         tbody.appendChild(row);
     });
     return tbody;
@@ -267,7 +272,38 @@ function onBorderClicked() {
 }
 
 function onSimpleViewClicked() {
-    alert('This feature is under development!');
+    const buttonSimpleView = document.getElementById('buttonSimpleView');
+    const simpleViewIcon = document.querySelector('label[for="buttonSimpleView"] i');
+
+    // Toggle button between bi-eye and bi-eye-slash
+    buttonSimpleView.classList.toggle('simple-view');
+    if (simpleViewIcon) {
+        if (buttonSimpleView.classList.contains('simple-view')) {
+            console.log('[DEBUG] Simple View enabled');
+            simpleViewIcon.classList.remove('bi-eye');
+            simpleViewIcon.classList.add('bi-eye-slash');
+        } else {
+            console.log('[DEBUG] Simple View disabled');
+            simpleViewIcon.classList.remove('bi-eye-slash');
+            simpleViewIcon.classList.add('bi-eye');
+        }
+    }
+
+    // Toggle table class for simple view
+    const table = document.getElementById('tableRq1');
+    if (table) {
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const lcsCell = row.querySelector('.lifecyclestate');
+            if (lcsCell && lcsCell.textContent === 'Canceled') {
+                if (buttonSimpleView.classList.contains('simple-view')) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    }
 }
 
 function onNukeClicked() {

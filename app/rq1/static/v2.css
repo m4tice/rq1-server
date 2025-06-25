@@ -81,10 +81,27 @@ td {
     border-radius: 6px;
 }
 
-#buttonFeature1:hover,
-.btn-feature:hover {
-    color: #0d6efd !important;
-    background-color: #fff !important;
+/* Button toggle (checked) states */
+.btn-check:checked + .btn-setting {
+    background-color: #f6f8fa !important;
+    color: black !important;
+}
+
+.btn-check#buttonBorder:checked + .btn-setting {
+    background-color: #f6f8fa !important;
+    color: black !important;
+}
+
+body.dark-mode .btn,
+body.dark-mode .btn-package,
+body.dark-mode .btn-setting {
+    background-color: #23272a;
+    color: #e0e0e0;
+}
+
+body.dark-mode .btn-check:checked + .btn-setting {
+    background-color: #23272a !important;
+    color: #e0e0e0 !important;
 }
 
 /* =====================
@@ -200,8 +217,8 @@ body.dark-mode {
 body.dark-mode .btn,
 body.dark-mode .btn-package,
 body.dark-mode .btn-setting {
-    background-color: #23272a !important;
-    color: #e0e0e0 !important;
+    background-color: #23272a;
+    color: #e0e0e0;
 }
 
 body.dark-mode .table,
@@ -320,20 +337,31 @@ body.dark-mode td.border-transparent {
     display: none !important;
 }
 
-#buttonNuke:hover::before {
+#buttonNuke:hover::before,
+#buttonCola:hover::before {
     font-family: 'bootstrap-icons' !important;
-    content: "\f67b"; /* Unicode for bi-radioactive */
-    /* font-size: 18px; */
-    color: #0d6efd;
     display: inline-block;
     vertical-align: middle;
 }
 
+#buttonNuke:hover::before {
+    content: "\f67b"; /* Unicode for bi-radioactive */
+}
+
 #buttonCola:hover::before {
-    font-family: 'bootstrap-icons' !important;
-    content: "\f2df"; /* Unicode for bi-radioactive */
-    /* font-size: 18px; */
+    content: "\f2df"; /* Unicode for bi-cup-straw */
+}
+
+/* Light mode: buttonCola and buttonNuke hover background white */
+body:not(.dark-mode) #buttonCola:hover,
+body:not(.dark-mode) #buttonNuke:hover {
     color: #0d6efd;
-    display: inline-block;
-    vertical-align: middle;
+    background-color: #fff !important;
+}
+
+/* =====================
+   Simple View Button
+   ===================== */
+#buttonSimpleView.simple-view {
+    color: #0d6efd;
 }
