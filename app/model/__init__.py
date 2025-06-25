@@ -14,9 +14,14 @@ packages = ['Alle',
             'ComServices',
             'ComVeh',
             'ComCo',
-            'ComPtc',
+            'ComStd',
+            'ComDrv',
             'ComDia',
-            'LinStack',
+            'ComPtc',
+            'CAN',
+            'FlexRay',
+            'Ethernet',
+            'LIN',
             'SENT']
 
 # User data

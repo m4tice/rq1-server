@@ -1,0 +1,367 @@
+/* =====================
+   Base Styles & Layout
+   ===================== */
+body,
+button,
+input,
+select,
+textarea,
+table,
+th,
+td {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif !important;
+}
+
+.btnGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    width: 100%;
+}
+
+.div-settings {
+    display: flex;
+    justify-content: space-between;
+    max-width: 147px;
+    width: 100%;
+    gap: 1px;
+    border-radius: 0;
+}
+
+.div-packages {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 1312px;
+    width: 100%;
+    gap: 1px;
+}
+
+/* =====================
+   Button Styles
+   ===================== */
+.btn {
+    font-size: 75%;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #f6f8fa;
+    border: none;
+    border-radius: 0;
+    max-height: 35px;
+    min-height: 35px;
+}
+
+.btn-package {
+    width: 100px !important;
+}
+
+.btn-setting {
+    width: 36px !important;
+    flex: 0 0 36px !important;
+}
+
+.btn-first {
+    border-radius: 10px 0 0 10px !important;
+}
+
+.btn-last {
+    border-radius: 0 10px 10px 0 !important;
+}
+
+.btn-single {
+    border-radius: 10px !important;
+}
+
+.btn-feature {
+    border-radius: 6px;
+}
+
+/* Button toggle (checked) states */
+.btn-check:checked + .btn-setting {
+    background-color: #f6f8fa !important;
+    color: black !important;
+}
+
+.btn-check#buttonBorder:checked + .btn-setting {
+    background-color: #f6f8fa !important;
+    color: black !important;
+}
+
+body.dark-mode .btn,
+body.dark-mode .btn-package,
+body.dark-mode .btn-setting {
+    background-color: #23272a;
+    color: #e0e0e0;
+}
+
+body.dark-mode .btn-check:checked + .btn-setting {
+    background-color: #23272a !important;
+    color: #e0e0e0 !important;
+}
+
+/* =====================
+   Table Styles
+   ===================== */
+.table-container {
+    padding: 0 10px;
+    font-size: x-small;
+}
+
+table td:first-child,
+table th:first-child {
+    border-right: none !important;
+}
+
+table td+td,
+table th+th {
+    border-left: none !important;
+}
+
+/* .btn-setting.dropdown-toggle::after hides the default dropdown arrow */
+.btn-setting.dropdown-toggle::after {
+    display: none;
+}
+
+/* =====================
+   Dropdown & Filter Styles
+   ===================== */
+.dropdown-item {
+    font-size: x-small;
+}
+
+.filter-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    padding: 8px 12px;
+    max-height: 220px;
+    overflow-y: auto;
+    color: #222;
+    min-width: 140px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 100;
+}
+
+.filter-dropdown label {
+    display: block;
+    margin-bottom: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.filter-dropdown input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 4px;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 6px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.filter-dropdown input[type="checkbox"]:checked {
+    background: #fff;
+}
+
+.filter-dropdown input[type="checkbox"]:checked::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+th {
+    position: relative;
+}
+
+th:hover .filter-dropdown,
+th:focus-within .filter-dropdown {
+    display: block;
+}
+
+.filter-search-box {
+    margin-bottom: 5px !important;
+}
+
+/* =====================
+   Dark Mode Styles
+   ===================== */
+body.dark-mode {
+    background-color: #181a1b !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .btn,
+body.dark-mode .btn-package,
+body.dark-mode .btn-setting {
+    background-color: #23272a;
+    color: #e0e0e0;
+}
+
+body.dark-mode .table,
+body.dark-mode table,
+body.dark-mode th,
+body.dark-mode td {
+    background-color: transparent;
+    color: #e0e0e0;
+}
+
+body.dark-mode .filter-dropdown {
+    background-color: #23272a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .filter-dropdown input[type="checkbox"] {
+    background: #23272a !important;
+    border-color: #444 !important;
+}
+
+body.dark-mode .filter-dropdown input[type="checkbox"]:checked::after {
+    border-color: #e0e0e0 !important;
+}
+
+body.dark-mode .filter-search-box {
+    background: #23272a !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #444 !important;
+}
+
+body.dark-mode .btn:hover {
+    background-color: #1759c5 !important;
+    color: #fff !important;
+}
+
+body.dark-mode tbody tr:hover {
+    background-color: #f6f8fa !important;
+}
+
+body.dark-mode tbody tr:hover td {
+    color: #000 !important;
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: #23272a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .dropdown-menu .dropdown-item {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item:hover,
+body.dark-mode .dropdown-menu .dropdown-item:focus {
+    background-color: #444 !important;
+    color: #fff !important;
+}
+
+body.dark-mode #buttonSimpleView:hover {
+    color: #fff !important;
+    background-color: #1759c5 !important;
+}
+
+body.dark-mode #buttonNuke:hover::before, 
+body.dark-mode #buttonCola:hover::before {
+    /* background-color: #0d6efd !important; */
+    color: #fff !important;
+}
+
+/* =====================
+   Transitions & Effects
+   ===================== */
+body,
+.btn,
+.btn-package,
+.btn-setting,
+.table,
+table,
+th,
+td,
+.filter-dropdown,
+.filter-search-box,
+.dropdown-menu,
+.dropdown-item {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* =====================
+   Border Transparency
+   ===================== */
+.table.border-transparent,
+table.border-transparent,
+th.border-transparent,
+td.border-transparent {
+    border-color: #dee2e6 !important;
+}
+
+body.dark-mode .table.border-transparent,
+body.dark-mode table.border-transparent,
+body.dark-mode th.border-transparent,
+body.dark-mode td.border-transparent {
+    border-color: #6f6b71 !important;
+}
+
+#buttonNuke span,
+#buttonCola span {
+    display: inline-block;
+}
+
+#buttonNuke:hover span,
+#buttonCola:hover span {
+    display: none !important;
+}
+
+#buttonNuke:hover::before,
+#buttonCola:hover::before {
+    font-family: 'bootstrap-icons' !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#buttonNuke:hover::before {
+    content: "\f67b"; /* Unicode for bi-radioactive */
+}
+
+#buttonCola:hover::before {
+    content: "\f2df"; /* Unicode for bi-cup-straw */
+}
+
+/* Light mode: buttonCola and buttonNuke hover background white */
+body:not(.dark-mode) #buttonCola:hover,
+body:not(.dark-mode) #buttonNuke:hover {
+    color: #0d6efd;
+    background-color: #fff !important;
+}
+
+/* =====================
+   Simple View Button
+   ===================== */
+#buttonSimpleView.simple-view {
+    color: #0d6efd;
+}
